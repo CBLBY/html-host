@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>决策矩阵 · 交互分析</title>
+<style>
+  :root {
+    --accent: #8b3a3a;
+    --accent-light: #a84d4d;
+    --accent-glow: #c25a5a;
+    --bg: #1a1a1a;
+    --card: #222;
+    --border: #333;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --row-hover: #2a2a2a;
+    --row-alt: #1e1e1e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--accent-light);
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .toolbar .spacer { flex: 1; }
+  .toolbar .info { font-size: 12px; color: var(--text-dim); }
+  button {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .15s;
+    touch-action: manipulation;
+  }
+  button:hover { background: #333; }
+  button:active { transform: scale(.96); }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent-light);
+    color: #fff;
+  }
+  button.primary:hover { background: var(--accent-light); }
+  button.danger {
+    border-color: #c0392b;
+    color: #e74c3c;
+  }
+  button.danger:hover { background: #2a1515; }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+  th {
+    background: #111;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 10px 12px;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  th:hover { color: var(--text); }
+  th .sort-icon { margin-left: 4px; font-size: 11px; color: var(--accent-glow); }
+  td {
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+    vertical-align: middle;
+    word-break: break-word;
+  }
+  tr:nth-child(even) td { background: var(--row-alt); }
+  tr:hover td { background: var(--row-hover); }
+  tr.dragging td {
+    opacity: .5;
+    background: var(--accent) !important;
+  }
+
+  .drag-handle {
+    cursor: grab;
+    touch-action: none;
+    color: var(--text-dim);
+    font-size: 16px;
+    padding: 4px;
+    text-align: center;
+    width: 32px;
+  }
+  .drag-handle:active { cursor: grabbing; }
+
+  .editable {
+    cursor: text;
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+    transition: background .1s;
+    min-height: 1.2em;
+  }
+  .editable:focus {
+    outline: none;
+    background: #1a1a2e;
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .editable:hover { background: rgba(139,58,58,.15); }
+
+  .del-btn {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .del-btn:hover { color: #e74c3c; background: rgba(231,76,60,.1); }
+
+  .json-area {
+    display: none;
+    margin-top: 12px;
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+  }
+  .json-area.show { display: block; }
+  .json-area pre {
+    font: 12px/1.4 'SF Mono', 'Fira Code', monospace;
+    color: #ccc;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .json-area .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 500px) {
+    body { padding: 10px; }
+    th, td { padding: 6px 8px; font-size: 13px; }
+    .toolbar { gap: 4px; }
+    button { padding: 5px 10px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🧩 交互决策矩阵</h1>
+<div class="subtitle">拖拽排序 · 点击编辑 · 导出JSON → 回传Agent</div>
+
+<div class="toolbar">
+  <button class="primary" onclick="addRow()">+ 添加行</button>
+  <button onclick="exportJSON()">📤 导出JSON</button>
+  <button onclick="exportClipboard()">📋 复制JSON</button>
+  <button onclick="resetData()">↺ 重置</button>
+  <div class="spacer"></div>
+  <span class="info" id="rowCount"></span>
+</div>
+
+<div class="table-wrap">
+<table id="matrixTable">
+  <thead>
+    <tr>
+      <th style="width:32px"></th>
+      <th data-col="index" onclick="sortBy('index')"># <span class="sort-icon"></span></th>
+      <th data-col="name" onclick="sortBy('name')">名称 <span class="sort-icon"></span></th>
+      <th data-col="value" onclick="sortBy('value')">权重 <span class="sort-icon"></span></th>
+      <th data-col="score" onclick="sortBy('score')">评分 <span class="sort-icon"></span></th>
+      <th data-col="note" onclick="sortBy('note')">备注 <span class="sort-icon"></span></th>
+      <th style="width:32px"></th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<div class="json-area" id="jsonArea">
+  <button class="copy-btn" onclick="copyJSON()">复制</button>
+  <pre id="jsonPreview"></pre>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const defaultData = [
+  { index: 1, name: "PEG比率",    value: "30%", score: 8, note: "成长+估值双因子" },
+  { index: 2, name: "ROE趋势",     value: "25%", score: 7, note: "盈利能力持续性" },
+  { index: 3, name: "现金流质量",  value: "20%", score: 9, note: "经营现金流/净利润" },
+  { index: 4, name: "行业β暴露",   value: "15%", score: 5, note: "周期敏感度调整" },
+  { index: 5, name: "管理层信号",  value: "10%", score: 6, note: "增持/减持/回购" }
+];
+let data = JSON.parse(JSON.stringify(defaultData));
+
+function render() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  data.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.dataset.index = i;
+
+    const tdHandle = document.createElement('td');
+    tdHandle.className = 'drag-handle';
+    tdHandle.textContent = '⠿';
+    tdHandle.onmousedown = (e) => startDrag(e, i);
+    tdHandle.ontouchstart = (e) => startDrag(e, i);
+    tr.appendChild(tdHandle);
+
+    const tdIndex = document.createElement('td');
+    tdIndex.textContent = row.index;
+    tr.appendChild(tdIndex);
+
+    const tdName = document.createElement('td');
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'editable';
+    nameSpan.contentEditable = true;
+    nameSpan.textContent = row.name;
+    nameSpan.onblur = () => { data[i].name = nameSpan.textContent.trim() || row.name; };
+    nameSpan.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); nameSpan.blur(); } };
+    tdName.appendChild(nameSpan);
+    tr.appendChild(tdName);
+
+    const tdValue = document.createElement('td');
+    const valSpan = document.createElement('span');
+    valSpan.className = 'editable';
+    valSpan.contentEditable = true;
+    valSpan.textContent = row.value;
+    valSpan.onblur = () => { data[i].value = valSpan.textContent.trim() || row.value; };
+    valSpan.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); valSpan.blur(); } };
+    tdValue.appendChild(valSpan);
+    tr.appendChild(tdValue);
+
+    const tdScore = document.createElement('td');
+    const scoreSpan = document.createElement('span');
+    scoreSpan.className = 'editable';
+    scoreSpan.contentEditable = true;
+    scoreSpan.textContent = row.score;
+    scoreSpan.onblur = () => {
+      let v = parseInt(scoreSpan.textContent.trim());
+      if (isNaN(v)) v = row.score;
+      if (v < 0) v = 0;
+      if (v > 10) v = 10;
+      data[i].score = v;
+    };
+    scoreSpan.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); scoreSpan.blur(); } };
+    tdScore.appendChild(scoreSpan);
+    tr.appendChild(tdScore);
+
+    const tdNote = document.createElement('td');
+    const noteSpan = document.createElement('span');
+    noteSpan.className = 'editable';
+    noteSpan.contentEditable = true;
+    noteSpan.textContent = row.note;
+    noteSpan.onblur = () => { data[i].note = noteSpan.textContent.trim() || row.note; };
+    noteSpan.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); noteSpan.blur(); } };
+    tdNote.appendChild(noteSpan);
+    tr.appendChild(tdNote);
+
+    const tdDel = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'del-btn';
+    delBtn.textContent = '✕';
+    delBtn.onclick = () => { if (confirm('删除此行?')) { data.splice(i,1); reindex(); render(); } };
+    tdDel.appendChild(delBtn);
+    tr.appendChild(tdDel);
+
+    tbody.appendChild(tr);
+  });
+  document.getElementById('rowCount').textContent = data.length + ' 行';
+}
+
+function reindex() {
+  data.forEach((row, i) => { row.index = i + 1; });
+}
+
+function startDrag(e, idx) {
+  e.preventDefault();
+  const rows = document.querySelectorAll('#tableBody tr');
+  const dragEl = rows[idx];
+  if (!dragEl) return;
+  dragEl.classList.add('dragging');
+
+  const onMove = (ev) => {
+    ev.preventDefault();
+    const target = ev.target.closest('tr');
+    if (!target || target === dragEl) return;
+    const tbody = document.getElementById('tableBody');
+    const rect = target.getBoundingClientRect();
+    const mid = rect.top + rect.height / 2;
+    const clientY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+    if (clientY < mid) {
+      tbody.insertBefore(dragEl, target);
+    } else {
+      tbody.insertBefore(dragEl, target.nextSibling);
+    }
+  };
+
+  const onEnd = () => {
+    dragEl.classList.remove('dragging');
+    const newData = [];
+    document.querySelectorAll('#tableBody tr').forEach(tr => {
+      const idx = parseInt(tr.dataset.index);
+      if (!isNaN(idx) && data[idx]) newData.push(data[idx]);
+    });
+    if (newData.length === data.length) { data = newData; reindex(); }
+    else { reindex(); }
+    render();
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onEnd);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+  };
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onEnd);
+}
+
+let sortDir = {};
+function sortBy(col) {
+  sortDir[col] = !sortDir[col] ? 1 : -sortDir[col];
+  const dir = sortDir[col];
+  data.sort((a, b) => {
+    let va = a[col], vb = b[col];
+    if (typeof va === 'string') {
+      const na = parseFloat(va.replace(/[%$]/g,''));
+      const nb = parseFloat(vb.replace(/[%$]/g,''));
+      if (!isNaN(na) && !isNaN(nb)) return (na - nb) * dir;
+      return va.localeCompare(vb, 'zh') * dir;
+    }
+    return (va - vb) * dir;
+  });
+  reindex();
+  render();
+  document.querySelectorAll('th .sort-icon').forEach(el => el.textContent = '');
+  const icon = document.querySelector(`th[data-col="${col}"] .sort-icon`);
+  if (icon) icon.textContent = dir > 0 ? '▲' : '▼';
+}
+
+function addRow() {
+  const avgScore = data.length > 0 ? Math.round(data.reduce((s,d) => s + (parseInt(d.score)||0), 0) / data.length) : 5;
+  data.push({ index: data.length + 1, name: "新指标", value: "0%", score: avgScore, note: "" });
+  render();
+  toast("已添加新行");
+}
+
+function exportJSON() {
+  const json = JSON.stringify(data, null, 2);
+  document.getElementById('jsonPreview').textContent = json;
+  document.getElementById('jsonArea').classList.add('show');
+}
+
+function exportClipboard() {
+  const json = JSON.stringify(data, null, 2);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(json).then(() => toast("已复制到剪贴板"));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = json;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast("已复制到剪贴板");
+  }
+}
+
+function copyJSON() { exportClipboard(); }
+
+function resetData() {
+  if (!confirm('重置为默认数据？当前编辑会丢失。')) return;
+  data = JSON.parse(JSON.stringify(defaultData));
+  document.getElementById('jsonArea').classList.remove('show');
+  render();
+  toast('已重置');
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+render();
+</script>
+</body>
+</html>
