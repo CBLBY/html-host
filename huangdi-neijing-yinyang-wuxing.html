@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黄帝内经 · 阴阳五行学说</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif SC', 'SimSun', serif;
+    background: #f5f0e8;
+    color: #2c2416;
+    line-height: 1.9;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a2e 100%);
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(255,215,0,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(255,255,255,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(255,100,50,0.04) 0%, transparent 50%);
+  }
+
+  .hero-circle {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,215,0,0.15);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero-circle-2 {
+    width: 480px;
+    height: 480px;
+    animation-delay: 2s;
+    border-color: rgba(255,255,255,0.05);
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.8; }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 900;
+    color: #ffd700;
+    letter-spacing: 0.4em;
+    text-shadow: 0 0 60px rgba(255,215,0,0.2);
+    z-index: 1;
+    margin-bottom: 0.3em;
+  }
+
+  .hero h1 span {
+    display: inline-block;
+    animation: fadeInUp 1.2s ease both;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.6em;
+    font-weight: 300;
+    z-index: 1;
+    margin-bottom: 2rem;
+  }
+
+  .hero .quote {
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    color: rgba(255,215,0,0.6);
+    font-style: italic;
+    z-index: 1;
+    max-width: 720px;
+    line-height: 2;
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(255,215,0,0.15);
+    border-bottom: 1px solid rgba(255,215,0,0.15);
+    padding: 1rem 2rem;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    animation: bounce 2s infinite;
+    z-index: 1;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== NAV ===== */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(44,36,22,0.08);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0 1rem;
+  }
+
+  .sticky-nav a {
+    text-decoration: none;
+    color: #5a4a3a;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.9rem 1.6rem;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    letter-spacing: 0.1em;
+  }
+
+  .sticky-nav a:hover {
+    color: #8b3a3a;
+    border-bottom-color: #8b3a3a;
+    background: rgba(139,58,58,0.04);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-header h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    color: #2c2416;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.4em;
+  }
+
+  .section-header .cn-sub {
+    font-size: 0.9rem;
+    color: #8b3a3a;
+    letter-spacing: 0.3em;
+    font-weight: 500;
+  }
+
+  .section-header .divider {
+    width: 60px;
+    height: 2px;
+    background: #8b3a3a;
+    margin: 1.2rem auto;
+    border-radius: 2px;
+  }
+
+  .section-header p.desc {
+    color: #7a6a5a;
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .text-body {
+    font-size: 1.05rem;
+    color: #3a3026;
+  }
+
+  .text-body p {
+    margin-bottom: 1.2em;
+    text-indent: 2em;
+  }
+
+  .text-body p.no-indent {
+    text-indent: 0;
+  }
+
+  .quote-block {
+    background: rgba(139,58,58,0.04);
+    border-left: 3px solid #8b3a3a;
+    padding: 1.2rem 1.8rem;
+    margin: 1.8rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .quote-block .source {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: #8b3a3a;
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  .highlight {
+    color: #8b3a3a;
+    font-weight: 600;
+  }
+
+  /* ===== YIN-YANG VISUAL ===== */
+  .taiji-section {
+    background: linear-gradient(180deg, #f5f0e8 0%, #ede6d8 100%);
+  }
+
+  .taiji-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0 3rem;
+  }
+
+  .taiji {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #1a1a2e 0%, #1a1a2e 50%, #f5f0e8 50%, #f5f0e8 100%);
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  }
+
+  .taiji::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f5f0e8 0%, #f5f0e8 25%, #1a1a2e 25%, #1a1a2e 100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+  }
+
+  .taiji::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1a1a2e 0%, #1a1a2e 25%, #f5f0e8 25%, #f5f0e8 100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+
+  .taiji-caption {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #7a6a5a;
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== YIN-YANG CORE TABLE ===== */
+  .comparison-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  .compare-yin, .compare-yang {
+    padding: 1.8rem;
+  }
+
+  .compare-yin {
+    background: #1a1a2e;
+    color: #e8e0d0;
+  }
+
+  .compare-yang {
+    background: #d4c8b0;
+    color: #1a1a2e;
+  }
+
+  .compare-yin h4, .compare-yang h4 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .compare-yin h4 { color: #ffd700; }
+  .compare-yang h4 { color: #8b3a3a; }
+
+  .compare-yin ul, .compare-yang ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .compare-yin li, .compare-yang li {
+    padding: 0.4rem 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .compare-yang li { border-color: rgba(0,0,0,0.06); }
+
+  .compare-yin li:last-child, .compare-yang li:last-child { border: none; }
+
+  .label { opacity: 0.6; font-size: 0.85rem; }
+
+  /* ===== FIVE ELEMENTS ===== */
+  .elements-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .element-card {
+    text-align: center;
+    padding: 1.5rem 0.8rem;
+    border-radius: 12px;
+    transition: transform 0.2s;
+    cursor: default;
+  }
+
+  .element-card:hover { transform: translateY(-4px); }
+
+  .element-card .emoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .element-card .el-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .element-card .el-attr {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .el-wood { background: rgba(76, 175, 80, 0.1); }
+  .el-wood .el-name { color: #2e7d32; }
+  .el-fire { background: rgba(244, 67, 54, 0.1); }
+  .el-fire .el-name { color: #c62828; }
+  .el-earth { background: rgba(255, 193, 7, 0.12); }
+  .el-earth .el-name { color: #b8860b; }
+  .el-metal { background: rgba(158, 158, 158, 0.12); }
+  .el-metal .el-name { color: #546e7a; }
+  .el-water { background: rgba(33, 150, 243, 0.1); }
+  .el-water .el-name { color: #0d47a1; }
+
+  /* ===== CYCLE DIAGRAM ===== */
+  .cycle-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem 0;
+  }
+
+  .cycle-container {
+    position: relative;
+    width: 340px;
+    height: 340px;
+  }
+
+  .cycle-container svg { width: 100%; height: 100%; }
+
+  .cycle-legend {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.85rem; font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .legend-dot {
+    width: 20px; height: 4px; border-radius: 2px;
+  }
+
+  .legend-dot.sheng { background: #c62828; }
+  .legend-dot.ke {    background: #546e7a; }
+
+  .cycle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .cycle-table th {
+    background: #2c2416;
+    color: #f5f0e8;
+    padding: 0.8rem 1rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
+  .cycle-table th:first-child { border-radius: 8px 0 0 0; }
+  .cycle-table th:last-child  { border-radius: 0 8px 0 0; }
+
+  .cycle-table td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid rgba(44,36,22,0.08);
+    font-size: 0.9rem;
+  }
+
+  .cycle-table tr:last-child td { border-bottom: none; }
+
+  .cycle-table tr:hover td { background: rgba(139,58,58,0.03); }
+
+  .cycle-table .rel-sheng { color: #c62828; font-weight: 500; }
+  .cycle-table .rel-ke   { color: #546e7a; font-weight: 500; }
+  .cycle-table .rel-cheng { color: #2e7d32; font-weight: 500; }
+  .cycle-table .rel-wu   { color: #b8860b; font-weight: 500; }
+
+  /* ===== MEDICAL MAPPING ===== */
+  .organ-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+
+  .organ-card {
+    padding: 1.5rem;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border-left: 3px solid #8b3a3a;
+  }
+
+  .organ-card h5 {
+    font-size: 1.1rem;
+    color: #2c2416;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .organ-card .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    margin-right: 0.3rem;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .tag-wood { background: rgba(76,175,80,0.15); color: #2e7d32; }
+  .tag-fire { background: rgba(244,67,54,0.12); color: #c62828; }
+  .tag-earth { background: rgba(255,193,7,0.15); color: #b8860b; }
+  .tag-metal { background: rgba(158,158,158,0.2); color: #546e7a; }
+  .tag-water { background: rgba(33,150,243,0.12); color: #0d47a1; }
+
+  .organ-card ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.88rem;
+    color: #5a4a3a;
+  }
+
+  .organ-card li { padding: 0.2rem 0; }
+  .organ-card li::before { content: '· '; color: #8b3a3a; }
+
+  /* ===== QUOTE CARDS ===== */
+  .quote-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+
+  .classic-quote {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    position: relative;
+  }
+
+  .classic-quote::before {
+    content: '「';
+    font-size: 2.5rem;
+    color: #8b3a3a;
+    opacity: 0.3;
+    position: absolute;
+    top: 0.2rem;
+    left: 0.8rem;
+    line-height: 1;
+  }
+
+  .classic-quote .quote-text {
+    font-size: 1rem;
+    padding-left: 1.2rem;
+    font-style: italic;
+  }
+
+  .classic-quote .quote-ref {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #8b3a3a;
+    margin-top: 0.4rem;
+    font-style: normal;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1a1a2e;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    line-height: 2;
+  }
+
+  footer strong {
+    color: rgba(255,215,0,0.6);
+    font-weight: 400;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .section { padding: 3rem 1.2rem; }
+    .comparison-table { grid-template-columns: 1fr; }
+    .elements-grid { grid-template-columns: repeat(3, 1fr); }
+    .cycle-container { width: 280px; height: 280px; }
+    .sticky-nav { overflow-x: auto; justify-content: flex-start; }
+    .sticky-nav a { padding: 0.8rem 1rem; font-size: 0.78rem; }
+    .taiji { width: 150px; height: 150px; }
+    .taiji::before, .taiji::after { width: 75px; height: 75px; }
+  }
+
+  @media (max-width: 420px) {
+    .elements-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-circle"></div>
+  <div class="hero-circle hero-circle-2"></div>
+  <h1>黄帝内经</h1>
+  <p class="subtitle">阴 阳 · 五 行</p>
+  <p class="quote">
+    "阴阳者，天地之道也，万物之纲纪，变化之父母，生杀之本始，神明之府也。"
+  </p>
+  <div class="scroll-indicator">↓ 向下阅读</div>
+</section>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav">
+  <a href="#yin-yang">阴阳学说</a>
+  <a href="#wu-xing">五行学说</a>
+  <a href="#cycles">生克关系</a>
+  <a href="#medicine">医学应用</a>
+  <a href="#classics">经典原文</a>
+</nav>
+
+<!-- ============ 阴阳 ============ -->
+<section class="section taiji-section" id="yin-yang">
+  <div class="section-header">
+    <h2>阴阳学说</h2>
+    <p class="cn-sub">YĪN YÁNG XUÉ SHUŌ</p>
+    <div class="divider"></div>
+    <p class="desc">《黄帝内经》的理论基石——用阴阳的对立统一解释生命、疾病与健康</p>
+  </div>
+
+  <div class="taiji-container">
+    <div class="taiji"></div>
+    <p class="taiji-caption">太极图 · 阴阳互根互用</p>
+  </div>
+
+  <div class="text-body">
+    <p>《素问·阴阳应象大论》开篇即言：<span class="highlight">"阴阳者，天地之道也，万物之纲纪，变化之父母，生杀之本始，神明之府也。"</span>这是《黄帝内经》对阴阳最根本的定义——阴阳不是两种物质，而是宇宙间一切事物运动变化的<span class="highlight">两大基本规律</span>。</p>
+
+    <p>阴阳的本质是<strong>对立统一</strong>。任何事物都包含阴阳两个方面：天为阳、地为阴；日为阳、月为阴；火为阳、水为阴；动为阳、静为阴。但阴阳不是绝对割裂的——阴中有阳，阳中有阴。正如《素问·金匮真言论》所说："阴中有阴，阳中有阳。"</p>
+  </div>
+
+  <div class="comparison-table">
+    <div class="compare-yin">
+      <h4>☯ 阴</h4>
+      <ul>
+        <li><span class="label">属性</span><span>静、柔、寒、降、内守</span></li>
+        <li><span class="label">天地</span><span>地</span></li>
+        <li><span class="label">日月</span><span>月</span></li>
+        <li><span class="label">水火</span><span>水</span></li>
+        <li><span class="label">人体</span><span>血、津液、五脏、里</span></li>
+        <li><span class="label">病证</span><span>寒证、虚证、里证</span></li>
+        <li><span class="label">治法</span><span>温补、滋养</span></li>
+      </ul>
+    </div>
+    <div class="compare-yang">
+      <h4>☰ 阳</h4>
+      <ul>
+        <li><span class="label">属性</span><span>动、刚、热、升、外卫</span></li>
+        <li><span class="label">天地</span><span>天</span></li>
+        <li><span class="label">日月</span><span>日</span></li>
+        <li><span class="label">水火</span><span>火</span></li>
+        <li><span class="label">人体</span><span>气、功能、六腑、表</span></li>
+        <li><span class="label">病证</span><span>热证、实证、表证</span></li>
+        <li><span class="label">治法</span><span>清热、发散</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="text-body">
+    <p>阴阳的四大核心关系构成了中医诊断和治疗的全部底层逻辑：</p>
+
+    <div class="quote-block">
+      <p class="no-indent"><strong>① 对立制约</strong> —— 阴阳相互对抗、相互抑制。"阴胜则阳病，阳胜则阴病。阳胜则热，阴胜则寒。"（《素问·阴阳应象大论》）</p>
+    </div>
+    <div class="quote-block">
+      <p class="no-indent"><strong>② 互根互用</strong> —— 阴阳互为前提，孤阴不生，独阳不长。"阴在内，阳之守也；阳在外，阴之使也。"（《素问·阴阳应象大论》）无阴则阳无所依，无阳则阴无所动。</p>
+    </div>
+    <div class="quote-block">
+      <p class="no-indent"><strong>③ 消长平衡</strong> —— 阴阳此消彼长，在动态中维持平衡。"阴胜则阳病，阳胜则阴病。……重寒则热，重热则寒。"动态失衡即是疾病。</p>
+    </div>
+    <div class="quote-block">
+      <p class="no-indent"><strong>④ 相互转化</strong> —— 物极必反，寒极生热，热极生寒。"重阴必阳，重阳必阴。"（《素问·阴阳应象大论》）这是疾病传变和转归的根本机理。</p>
+    </div>
+
+    <p>《黄帝内经》进一步将阴阳的思维方法推广到诊断（<span class="highlight">"善诊者，察色按脉，先别阴阳"</span>，见《素问·阴阳应象大论》），确立了"治病必求于本"之本，就是阴阳。</p>
+
+    <p>清代医家张志聪在《黄帝内经素问集注》中归纳："阴阳之道，其为用也大矣。天地之阴阳，合于人身之阴阳；人身之阴阳，合于天地之阴阳。"这正是天人合一的根本逻辑。</p>
+  </div>
+</section>
+
+<!-- ============ 五行 ============ -->
+<section class="section" id="wu-xing">
+  <div class="section-header">
+    <h2>五行学说</h2>
+    <p class="cn-sub">WŬ XÍNG XUÉ SHUŌ</p>
+    <div class="divider"></div>
+    <p class="desc">木、火、土、金、水——五种运动方式，不是五种物质</p>
+  </div>
+
+  <div class="text-body">
+    <p>很多人以为五行就是"五种元素"，这是根本性的误解。<span class="highlight">《黄帝内经》中的五行是五种运动方式（行即运动）：</span></p>
+
+    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+      <li style="padding: 0.4rem 0;"><strong>木</strong> — 曲直，具有<strong>生长、升发、条达</strong>特性</li>
+      <li style="padding: 0.4rem 0;"><strong>火</strong> — 炎上，具有<strong>温热、上升、光明</strong>特性</li>
+      <li style="padding: 0.4rem 0;"><strong>土</strong> — 稼穑，具有<strong>承载、生化、受纳</strong>特性</li>
+      <li style="padding: 0.4rem 0;"><strong>金</strong> — 从革，具有<strong>肃杀、收敛、清洁</strong>特性</li>
+      <li style="padding: 0.4rem 0;"><strong>水</strong> — 润下，具有<strong>寒凉、滋润、下行</strong>特性</li>
+    </ul>
+
+    <p>《尚书·洪范》最早给出了五行的字面定义，而《黄帝内经》将其发展为一套完整的<strong>分类归类比象系统</strong>——用五行的属性对自然界和人体的所有事物进行分类，并建立它们之间的动态关系网络。</p>
+  </div>
+
+  <div class="elements-grid">
+    <div class="element-card el-wood">
+      <span class="emoji">🌳</span>
+      <div class="el-name">木</div>
+      <div class="el-attr">曲直 · 生发</div>
+      <div style="margin-top:0.5rem;font-size:0.8rem;">春 · 东 · 风 · 青</div>
+    </div>
+    <div class="element-card el-fire">
+      <span class="emoji">🔥</span>
+      <div class="el-name">火</div>
+      <div class="el-attr">炎上 · 温热</div>
+      <div style="margin-top:0.5rem;font-size:0.8rem;">夏 · 南 · 暑 · 赤</div>
+    </div>
+    <div class="element-card el-earth">
+      <span class="emoji">🌍</span>
+      <div class="el-name">土</div>
+      <div class="el-attr">稼穑 · 承载</div>
+      <div style="margin-top:0.5rem;font-size:0.8rem;">长夏 · 中 · 湿 · 黄</div>
+    </div>
+    <div class="element-card el-metal">
+      <span class="emoji">⚔️</span>
+      <div class="el-name">金</div>
+      <div class="el-attr">从革 · 收敛</div>
+      <div style="margin-top:0.5rem;font-size:0.8rem;">秋 · 西 · 燥 · 白</div>
+    </div>
+    <div class="element-card el-water">
+      <span class="emoji">💧</span>
+      <div class="el-name">水</div>
+      <div class="el-attr">润下 · 寒凉</div>
+      <div style="margin-top:0.5rem;font-size:0.8rem;">冬 · 北 · 寒 · 黑</div>
+    </div>
+  </div>
+
+  <div class="text-body">
+    <p>《素问·脏气法时论》直接将五脏与五行对应：<span class="highlight">肝（木）、心（火）、脾（土）、肺（金）、肾（水）</span>。每一个脏腑都不仅是一个解剖器官，更是一个"功能系统"，对应着相应的季节、方位、情绪、颜色、味道、音律、甚至星宿。</p>
+
+    <p>这种"取象比类"的思维方法，使得五行学说成为《黄帝内经》中贯穿生理、病理、诊断、治疗、养生的一条主线。</p>
+  </div>
+</section>
+
+<!-- ============ 生克 ============ -->
+<section class="section" style="background:#f0eadc; border-radius: 0; padding-top: 5rem; padding-bottom: 5rem;" id="cycles">
+  <div class="section-header">
+    <h2>生克乘侮</h2>
+    <p class="cn-sub">SHĒNG KÈ CHÉNG WŬ</p>
+    <div class="divider"></div>
+    <p class="desc">五行之间两两关系网络——相生、相克、相乘、相侮</p>
+  </div>
+
+  <!-- SVG Cycle Diagram -->
+  <div class="cycle-visual">
+    <div class="cycle-container">
+      <svg viewBox="0 0 340 340">
+        <!-- 相生弧线 (outer, 红色) -->
+        <path d="M 170 30 A 140 140 0 0 1 295 120" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+        <path d="M 295 120 A 140 140 0 0 1 275 270" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+        <path d="M 275 270 A 140 140 0 0 1 65 270" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+        <path d="M 65 270 A 140 140 0 0 1 45 120" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+        <path d="M 45 120 A 140 140 0 0 1 170 30" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#arrow-red)"/>
+
+        <!-- 相克弧线 (inner, 灰蓝) -->
+        <path d="M 170 60 A 110 110 0 0 1 265 170" fill="none" stroke="#546e7a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-grey)"/>
+        <path d="M 265 170 A 110 110 0 0 1 195 265" fill="none" stroke="#546e7a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-grey)"/>
+        <path d="M 195 265 A 110 110 0 0 1 110 265" fill="none" stroke="#546e7a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-grey)"/>
+        <path d="M 110 265 A 110 110 0 0 1 75 170" fill="none" stroke="#546e7a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-grey)"/>
+        <path d="M 75 170 A 110 110 0 0 1 170 60" fill="none" stroke="#546e7a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow-grey)"/>
+
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#c62828"/>
+          </marker>
+          <marker id="arrow-grey" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#546e7a"/>
+          </marker>
+        </defs>
+
+        <!-- Element circles -->
+        <!-- 木 (top) -->
+        <circle cx="170" cy="55" r="28" fill="white" stroke="#2e7d32" stroke-width="2.5"/>
+        <text x="170" y="62" text-anchor="middle" font-size="18" font-weight="700" fill="#2e7d32" font-family="'Noto Serif SC',serif">木</text>
+        <!-- 火 (right) -->
+        <circle cx="285" cy="170" r="28" fill="white" stroke="#c62828" stroke-width="2.5"/>
+        <text x="285" y="177" text-anchor="middle" font-size="18" font-weight="700" fill="#c62828" font-family="'Noto Serif SC',serif">火</text>
+        <!-- 土 (bottom-right) -->
+        <circle cx="230" cy="285" r="28" fill="white" stroke="#b8860b" stroke-width="2.5"/>
+        <text x="230" y="292" text-anchor="middle" font-size="18" font-weight="700" fill="#b8860b" font-family="'Noto Serif SC',serif">土</text>
+        <!-- 金 (bottom-left) -->
+        <circle cx="110" cy="285" r="28" fill="white" stroke="#546e7a" stroke-width="2.5"/>
+        <text x="110" y="292" text-anchor="middle" font-size="18" font-weight="700" fill="#546e7a" font-family="'Noto Serif SC',serif">金</text>
+        <!-- 水 (left) -->
+        <circle cx="55" cy="170" r="28" fill="white" stroke="#0d47a1" stroke-width="2.5"/>
+        <text x="55" y="177" text-anchor="middle" font-size="18" font-weight="700" fill="#0d47a1" font-family="'Noto Serif SC',serif">水</text>
+
+        <!-- Labels -->
+        <text x="225" y="100" font-size="11" fill="#c62828" font-weight="500" font-family="'Noto Sans SC',sans-serif">相生</text>
+        <text x="200" y="230" font-size="11" fill="#546e7a" font-weight="500" font-family="'Noto Sans SC',sans-serif">相克</text>
+      </svg>
+    </div>
+
+    <div class="cycle-legend">
+      <div class="legend-item">
+        <div class="legend-dot sheng"></div>
+        <span>相生 (促进)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ke"></div>
+        <span>相克 (制约)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <table class="cycle-table">
+    <thead>
+      <tr>
+        <th>关系</th>
+        <th>方向</th>
+        <th>含义</th>
+        <th>临床意义</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rel-sheng">相生</td>
+        <td>木→火→土→金→水→木</td>
+        <td>递相滋生、促进、助长</td>
+        <td>"虚则补其母，实则泻其子" — 治则依据</td>
+      </tr>
+      <tr>
+        <td class="rel-ke">相克</td>
+        <td>木→土→水→火→金→木</td>
+        <td>递相克制、制约、抑制</td>
+        <td>维持动态平衡，克之太过则病</td>
+      </tr>
+      <tr>
+        <td class="rel-cheng">相乘</td>
+        <td>克之太过（如木乘土）</td>
+        <td>相克过度，破坏平衡</td>
+        <td>肝气横逆犯脾（肝脾不和）</td>
+      </tr>
+      <tr>
+        <td class="rel-wu">相侮</td>
+        <td>反克（如木侮金）</td>
+        <td>被克者过强，反克制约者</td>
+        <td>肝火犯肺（木火刑金）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-body">
+    <p>《素问·六微旨大论》指出：<span class="highlight">"亢则害，承乃制，制则生化。"</span> 五行系统之所以能保持稳定，恰恰因为"生"与"克"是一体两面——相生使系统有动力，相克使系统不失控。过亢则为害，有承制方能生化不息。这是一套极其精妙的<strong>负反馈控制模型</strong>，比西方科学早了至少两千年发现系统稳态的本质。</p>
+
+    <p>在临床上，<span class="highlight">"见肝之病，知肝传脾，当先实脾"</span>（《难经·七十七难》，源自《内经》思想）就是对五行生克关系的直接应用——肝木亢盛会克制脾土，因此在治疗肝病时先要顾护脾胃，防止传变。</p>
+  </div>
+</section>
+
+<!-- ============ 医学应用 ============ -->
+<section class="section" id="medicine">
+  <div class="section-header">
+    <h2>医学应用</h2>
+    <p class="cn-sub">YĪ XUÉ YÌNG YÒNG</p>
+    <div class="divider"></div>
+    <p class="desc">阴阳五行如何具体指导生理、病理、诊断和治疗</p>
+  </div>
+
+  <div class="text-body">
+    <h3 style="font-size:1.3rem;color:#8b3a3a;margin:1.5rem 0 1rem;letter-spacing:0.1em;">▎五脏归五行</h3>
+    <p>《素问·脏气法时论》与《灵枢·本输》确立了五脏-五行的对应，以及每脏在生理、病理、季节、情志上的系统性关联：</p>
+  </div>
+
+  <div class="organ-map">
+    <div class="organ-card">
+      <h5>肝 <span class="tag tag-wood">木</span></h5>
+      <ul>
+        <li>主疏泄、藏血</li>
+        <li>开窍于目，在体合筋</li>
+        <li>应春，喜条达恶抑郁</li>
+        <li>在志为怒，怒伤肝</li>
+        <li>五味：酸</li>
+      </ul>
+    </div>
+    <div class="organ-card">
+      <h5>心 <span class="tag tag-fire">火</span></h5>
+      <ul>
+        <li>主血脉、藏神</li>
+        <li>开窍于舌，在体合脉</li>
+        <li>应夏，为君主之官</li>
+        <li>在志为喜，喜伤心</li>
+        <li>五味：苦</li>
+      </ul>
+    </div>
+    <div class="organ-card">
+      <h5>脾 <span class="tag tag-earth">土</span></h5>
+      <ul>
+        <li>主运化、升清、统血</li>
+        <li>开窍于口，在体合肉</li>
+        <li>应长夏，后天之本</li>
+        <li>在志为思，思伤脾</li>
+        <li>五味：甘</li>
+      </ul>
+    </div>
+    <div class="organ-card">
+      <h5>肺 <span class="tag tag-metal">金</span></h5>
+      <ul>
+        <li>主气、司呼吸、通调水道</li>
+        <li>开窍于鼻，在体合皮</li>
+        <li>应秋，为相傅之官</li>
+        <li>在志为悲（忧），忧伤肺</li>
+        <li>五味：辛</li>
+      </ul>
+    </div>
+    <div class="organ-card">
+      <h5>肾 <span class="tag tag-water">水</span></h5>
+      <ul>
+        <li>主藏精、主水、纳气</li>
+        <li>开窍于耳及二阴，在体合骨</li>
+        <li>应冬，先天之本</li>
+        <li>在志为恐，恐伤肾</li>
+        <li>五味：咸</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="text-body">
+    <h3 style="font-size:1.3rem;color:#8b3a3a;margin:2.5rem 0 1rem;letter-spacing:0.1em;">▎诊断：四诊合参，先别阴阳</h3>
+    <p>《素问·阴阳应象大论》说：<span class="highlight">"善诊者，察色按脉，先别阴阳。"</span> 这是中医诊断的总纲。望闻问切四诊所得的一切信息，最终都要归结为阴证或阳证：</p>
+
+    <div class="comparison-table" style="margin-bottom:2rem;">
+      <div class="compare-yin">
+        <h4 style="font-size:1.1rem;">阴证</h4>
+        <ul>
+          <li><span class="label">面色</span><span>苍白、晦暗</span></li>
+          <li><span class="label">声音</span><span>低微、少气</span></li>
+          <li><span class="label">脉象</span><span>沉、迟、细、弱</span></li>
+          <li><span class="label">寒热</span><span>畏寒、肢冷</span></li>
+          <li><span class="label">舌象</span><span>淡白、胖嫩</span></li>
+        </ul>
+      </div>
+      <div class="compare-yang">
+        <h4 style="font-size:1.1rem;">阳证</h4>
+        <ul>
+          <li><span class="label">面色</span><span>潮红、通红</span></li>
+          <li><span class="label">声音</span><span>高亢、烦躁</span></li>
+          <li><span class="label">脉象</span><span>浮、数、洪、滑</span></li>
+          <li><span class="label">寒热</span><span>发热、恶热</span></li>
+          <li><span class="label">舌象</span><span>红绛、黄苔</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.3rem;color:#8b3a3a;margin:2.5rem 0 1rem;letter-spacing:0.1em;">▎治则：谨察阴阳所在而调之，以平为期</h3>
+    <p>《素问·至真要大论》提出了中医治疗的最高原则：<span class="highlight">"谨察阴阳所在而调之，以平为期。"</span> 具体贯彻为：</p>
+
+    <ul style="padding-left:2em;margin:1rem 0;line-height:2.2;">
+      <li><strong>阳病治阴，阴病治阳</strong> — 阴虚则滋阴，阳虚则温阳；热者寒之，寒者热之</li>
+      <li><strong>虚则补其母，实则泻其子</strong> — 运用五行生克规律间接调整（如"培土生金"治肺虚）</li>
+      <li><strong>壮水之主以制阳光，益火之源以消阴翳</strong> — 王冰对《内经》治则的经典发挥，补肾水以降虚火（壮水制阳），温命火以散阴寒（益火消阴）</li>
+    </ul>
+
+    <p>《素问·四气调神大论》还将阴阳理论延伸到养生领域：<span class="highlight">"夫四时阴阳者，万物之根本也。所以圣人春夏养阳，秋冬养阴，以从其根。"</span> 顺应四时阴阳变化来调养身体，是与万物同生长、同收藏的根本大法。</p>
+  </div>
+</section>
+
+<!-- ============ 经典原文 ============ -->
+<section class="section" style="background:#f0eadc; border-radius: 0; padding-top: 5rem; padding-bottom: 5rem;" id="classics">
+  <div class="section-header">
+    <h2>经典原文精选</h2>
+    <p class="cn-sub">JĪNG DIĂN YUÁN WÉN</p>
+    <div class="divider"></div>
+    <p class="desc">《黄帝内经》中论述阴阳五行的核心篇章选录</p>
+  </div>
+
+  <div class="quote-carousel">
+    <div class="classic-quote">
+      <p class="quote-text">阴阳者，天地之道也，万物之纲纪，变化之父母，生杀之本始，神明之府也。治病必求于本。</p>
+      <span class="quote-ref">——《素问·阴阳应象大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">阴在内，阳之守也；阳在外，阴之使也。</p>
+      <span class="quote-ref">——《素问·阴阳应象大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">重寒则热，重热则寒。……重阴必阳，重阳必阴。</p>
+      <span class="quote-ref">——《素问·阴阳应象大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">天地之间，六合之内，不离于五。人亦应之。</p>
+      <span class="quote-ref">——《灵枢·通天》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">亢则害，承乃制，制则生化。外列盛衰，害则败乱，生化大病。</p>
+      <span class="quote-ref">——《素问·六微旨大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">夫四时阴阳者，万物之根本也。所以圣人春夏养阳，秋冬养阴，以从其根。</p>
+      <span class="quote-ref">——《素问·四气调神大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">善诊者，察色按脉，先别阴阳。</p>
+      <span class="quote-ref">——《素问·阴阳应象大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">谨察阴阳所在而调之，以平为期。</p>
+      <span class="quote-ref">——《素问·至真要大论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">阴平阳秘，精神乃治；阴阳离决，精气乃绝。</p>
+      <span class="quote-ref">——《素问·生气通天论》</span>
+    </div>
+    <div class="classic-quote">
+      <p class="quote-text">木得金而伐，火得水而灭，土得木而达，金得火而缺，水得土而绝。万物尽然，不可胜竭。</p>
+      <span class="quote-ref">——《素问·宝命全形论》</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>基于《黄帝内经·素问》与《黄帝内经·灵枢》原文整理</p>
+  <p>参考版本：人民卫生出版社 · 梅花版 · 张志聪《黄帝内经素问集注》</p>
+  <p>—— <strong>阴平阳秘，精神乃治</strong> ——</p>
+</footer>
+
+</body>
+</html>
