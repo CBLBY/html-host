@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五运六气 · 研究总览</title>
+<style>
+  :root {
+    --bg: #0f0f14;
+    --surface: #181820;
+    --surface2: #20202e;
+    --border: #2a2a3e;
+    --accent: #c4385a;
+    --accent2: #8b3a5a;
+    --text: #d8d8e0;
+    --text2: #9898a8;
+    --gold: #c8a86a;
+    --green: #5a9a6a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* Header */
+  header {
+    padding: 80px 24px 60px;
+    text-align: center;
+    background: linear-gradient(135deg, #181820 0%, #1a1028 50%, #181820 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-size: 2.6rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  header .sub {
+    font-size: 0.95rem;
+    color: var(--text2);
+    letter-spacing: 4px;
+  }
+  header .sub em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,15,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  nav a {
+    display: inline-block;
+    padding: 14px 18px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color .15s;
+  }
+  nav a:hover { color: var(--gold); }
+
+  /* Container */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Sections */
+  section { margin-bottom: 56px; }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--gold);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    letter-spacing: 3px;
+  }
+  h2 .accent { color: var(--accent); }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 24px 0 12px;
+  }
+  p { margin-bottom: 14px; color: var(--text2); }
+  p strong { color: var(--text); font-weight: 500; }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: rgba(196,56,90,0.06);
+    border-radius: 0 6px 6px 0;
+    color: var(--text2);
+    font-style: italic;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+  td { color: var(--text2); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Grid cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .card .title {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .card .desc { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+  /* Calculation Tool */
+  #calculator {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 24px 0;
+  }
+  #calculator .input-row {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  #calculator label {
+    font-size: 0.9rem;
+    color: var(--text2);
+  }
+  #calculator select, #calculator input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  #calculator select:focus, #calculator input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  #calculator button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+  #calculator button:hover { opacity: .85; }
+  #calc-result {
+    padding: 16px 20px;
+    background: var(--surface2);
+    border-radius: 8px;
+    line-height: 1.8;
+    font-size: 0.9rem;
+    min-height: 60px;
+    color: var(--text2);
+  }
+  #calc-result .highlight { color: var(--gold); font-weight: 500; }
+  #calc-result .accent-text { color: var(--accent); font-weight: 500; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    margin: 2px;
+  }
+  .tag-red { background: rgba(196,56,90,0.15); color: var(--accent); }
+  .tag-gold { background: rgba(200,168,106,0.15); color: var(--gold); }
+  .tag-green { background: rgba(90,154,106,0.15); color: var(--green); }
+
+  /* References */
+  .ref-list { list-style: none; }
+  .ref-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .ref-list li a { color: var(--accent); text-decoration: none; }
+  .ref-list li a:hover { text-decoration: underline; }
+  .ref-list li .source { color: var(--text2); font-size: 0.8rem; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; letter-spacing: 4px; }
+    header { padding: 48px 16px 36px; }
+    .container { padding: 24px 16px 48px; }
+    nav a { padding: 10px 12px; font-size: 0.8rem; }
+    #calculator .input-row { flex-direction: column; align-items: stretch; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>五 运 六 气</h1>
+  <div class="sub">《黄帝内经·素问》运气七篇 · 天人合一的理论范型</div>
+  <div class="sub" style="margin-top:6px;">研究总览 · <em>Wǔ Yùn Liù Qì</em> · 一个待验证的认知框架</div>
+</header>
+
+<nav>
+  <a href="#intro">概论</a>
+  <a href="#origin">经典源头</a>
+  <a href="#wuyun">五运</a>
+  <a href="#liuqi">六气</a>
+  <a href="#calc">推算工具</a>
+  <a href="#modern">现代研究</a>
+  <a href="#figures">关键医家</a>
+  <a href="#refs">参考文献</a>
+</nav>
+
+<div class="container">
+
+<!-- 概论 -->
+<section id="intro">
+  <h2>· 概论</h2>
+  <p>五运六气，简称"运气"，是<strong>中医天人合一思想最系统的理论表达</strong>——它试图用天干地支的周期框架，描述气候变化与人体健康的对应关系。这套理论认为：天地有周期，人气有响应。它不是玄学，而是一个<strong>可推算、可验证、可证伪</strong>的自然哲学模型。</p>
+
+  <blockquote>"夫五运六气，乃天地之纪纲，万物之生杀。" —《素问·天元纪大论》</blockquote>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">五运</div>
+      <div class="title">木·火·土·金·水</div>
+      <div class="desc">五行的运行变化。分岁运（全年）、主运（五季常位）、客运（逐年变动）。天干决定五运属性。</div>
+    </div>
+    <div class="card">
+      <div class="label">六气</div>
+      <div class="title">风·寒·暑·湿·燥·火</div>
+      <div class="desc">三阴三阳的气候表现。分主气（常序）、客气（逐年轮转）。地支决定司天在泉。</div>
+    </div>
+    <div class="card">
+      <div class="label">推步方法</div>
+      <div class="title">干支纪元</div>
+      <div class="desc">以六十甲子为周期，天干化五运、地支化六气，逐年逐气推演气候疾病特征。</div>
+    </div>
+    <div class="card">
+      <div class="label">争议</div>
+      <div class="title">待验证的假说</div>
+      <div class="desc">运气理论在SARS、新冠等疫病预测中有过"言中"案例，也有大量失准。它是一套<strong>需要现代流行病学检验</strong>的假说。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 经典源头 -->
+<section id="origin">
+  <h2>· 经典源头 <span class="accent">《运气七篇》</span></h2>
+  <p>五运六气完整的理论体系出自唐·王冰补入《素问》的七篇大论，又称<strong>"运气七篇"</strong>。这七篇是运气学的<strong>元文本</strong>，后世所有运气著作都在此基础上展开。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>篇名</th><th>核心内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>天元纪大论</td><td>运气总纲，干支化运化气的基本法则</td></tr>
+        <tr><td>五运行大论</td><td>五运的运行规律与天地对应关系</td></tr>
+        <tr><td>六微旨大论</td><td>六气运行的精微机理与节气对应</td></tr>
+        <tr><td>气交变大论</td><td>运气变异与疾病流行规律</td></tr>
+        <tr><td>五常政大论</td><td>五运平气/太过/不及的政候与病候</td></tr>
+        <tr><td>六元正纪大论</td><td>六十甲子逐年的运气格局详述</td></tr>
+        <tr><td>至真要大论</td><td>运气与辨证论治、方药对应</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote>王冰在《素问》序中自称得先师张公秘本，补入这七篇——这一操作在宋以前有争议，但宋以后官方认可，成为正统。</blockquote>
+</section>
+
+<!-- 五运 -->
+<section id="wuyun">
+  <h2>· 五运 <span class="accent">Wǔ Yùn</span></h2>
+
+  <h3>天干化五运（岁运 / 中运）</h3>
+  <p>年干决定当年的<strong>岁运（中运）</strong>，是全年气候的总基调。口诀："甲己土运，乙庚金运，丙辛水运，丁壬木运，戊癸火运。"</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>天干</th><th>化运</th><th>五行</th><th>太过/不及</th><th>气候特征</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>甲</td><td>土运</td><td>土</td><td><span class="tag tag-red">太过</span></td><td>雨湿流行</td></tr>
+        <tr><td>乙</td><td>金运</td><td>金</td><td><span class="tag tag-green">不及</span></td><td>炎火乃行</td></tr>
+        <tr><td>丙</td><td>水运</td><td>水</td><td><span class="tag tag-red">太过</span></td><td>寒气流行</td></tr>
+        <tr><td>丁</td><td>木运</td><td>木</td><td><span class="tag tag-green">不及</span></td><td>燥气流行</td></tr>
+        <tr><td>戊</td><td>火运</td><td>火</td><td><span class="tag tag-red">太过</span></td><td>暑气流行</td></tr>
+        <tr><td>己</td><td>土运</td><td>土</td><td><span class="tag tag-green">不及</span></td><td>风巧流行</td></tr>
+        <tr><td>庚</td><td>金运</td><td>金</td><td><span class="tag tag-red">太过</span></td><td>燥气流行</td></tr>
+        <tr><td>辛</td><td>水运</td><td>水</td><td><span class="tag tag-green">不及</span></td><td>湿气流行</td></tr>
+        <tr><td>壬</td><td>木运</td><td>木</td><td><span class="tag tag-red">太过</span></td><td>风气流行</td></tr>
+        <tr><td>癸</td><td>火运</td><td>火</td><td><span class="tag tag-green">不及</span></td><td>寒气流行</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>阳干（甲丙戊庚壬）= <span class="tag tag-red">太过</span>，阴干（乙丁己辛癸）= <span class="tag tag-green">不及</span>。太过之年本气流行，不及之年克制之气反乘。</p>
+
+  <h3>主运（五步常位）</h3>
+  <p>每年分五步，每步73日5刻，按五行相生序排列：<strong>木→火→土→金→水</strong>。始于大寒日，固定不变，代表<strong>季节性气候常轨</strong>。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>步序</th><th>主运</th><th>时段</th><th>节气区间</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>初运</td><td>木（风）</td><td>大寒→春分后13日</td><td>大寒·立春·雨水·惊蛰</td></tr>
+        <tr><td>二运</td><td>火（暑）</td><td>春分后13日→芒种后10日</td><td>春分·清明·谷雨·立夏</td></tr>
+        <tr><td>三运</td><td>土（湿）</td><td>芒种后10日→处暑后7日</td><td>芒种·夏至·小暑·大暑</td></tr>
+        <tr><td>四运</td><td>金（燥）</td><td>处暑后7日→立冬后4日</td><td>处暑·白露·秋分·寒露</td></tr>
+        <tr><td>终运</td><td>水（寒）</td><td>立冬后4日→大寒</td><td>立冬·小雪·大雪·冬至</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>客运</h3>
+  <p>随岁运而变的五步气运。以当年的岁运为初运，按五行相生顺序依次轮转，<strong>逐年变动</strong>。客运反映每年的<strong>异常气候干扰</strong>。</p>
+</section>
+
+<!-- 六气 -->
+<section id="liuqi">
+  <h2>· 六气 <span class="accent">Liù Qì</span></h2>
+
+  <h3>地支化六气·司天在泉</h3>
+  <p>年支决定<strong>司天之气</strong>（上半年）和<strong>在泉之气</strong>（下半年）。司天为客气第三气，主管上半年；在泉为客气第六气，主管下半年。口诀：<strong>"子午少阴君火，丑未太阴湿土，寅申少阳相火，卯酉阳明燥金，辰戌太阳寒水，巳亥厥阴风木。"</strong></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>地支<br>年份</th><th>司天<br>（上半年）</th><th>在泉<br>（下半年）</th><th>六气</th><th>五行</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>子·午</td><td>少阴君火</td><td>阳明燥金</td><td>热</td><td>火</td></tr>
+        <tr><td>丑·未</td><td>太阴湿土</td><td>太阳寒水</td><td>湿</td><td>土</td></tr>
+        <tr><td>寅·申</td><td>少阳相火</td><td>厥阴风木</td><td>暑</td><td>火</td></tr>
+        <tr><td>卯·酉</td><td>阳明燥金</td><td>少阴君火</td><td>燥</td><td>金</td></tr>
+        <tr><td>辰·戌</td><td>太阳寒水</td><td>太阴湿土</td><td>寒</td><td>水</td></tr>
+        <tr><td>巳·亥</td><td>厥阴风木</td><td>少阳相火</td><td>风</td><td>木</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>主气（六步常位）</h3>
+  <p>一年分六步，每步四个节气（约60.875日），固定顺序：<br>
+  <strong>厥阴风木→少阴君火→少阳相火→太阴湿土→阳明燥金→太阳寒水</strong></p>
+
+  <p>与主运类似，代表正常的季节性气候变化。但六气在<strong>三阴三阳</strong>框架下比五运更精细——它区分了君火（少阴）和相火（少阳），这是五行学说无法直接表达的。</p>
+
+  <h3>客气（六步轮转）</h3>
+  <p>随司天在泉而变。每年六步客气按<strong>三阴三阳</strong>顺序轮转：<br>
+  <strong>厥阴→少阴→太阴→少阳→阳明→太阳</strong><br>
+  司天为第三气，在泉为第六气。客气决定每年的<strong>异常气候</strong>。</p>
+</section>
+
+<!-- 推算工具 -->
+<section id="calc">
+  <h2>· 年份推算工具</h2>
+  <p>选择或输入年份，自动推算当年的<strong>岁运·司天·在泉</strong>格局。</p>
+
+  <div id="calculator">
+    <div class="input-row">
+      <label for="year-input">年份</label>
+      <input type="number" id="year-input" value="2026" min="1900" max="2100">
+      <button onclick="calcYear()">推算</button>
+    </div>
+    <div id="calc-result">点击"推算"查看结果</div>
+  </div>
+</section>
+
+<!-- 现代研究 -->
+<section id="modern">
+  <h2>· 现代科学研究</h2>
+
+  <p>五运六气的现代研究主要集中在几个方向：<strong>流行病学验证</strong>、<strong>气象数据回归</strong>、<strong>临床体质与发病相关性</strong>。以下是近年来有代表性的研究线索：</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">流行病学</div>
+      <div class="title">肿瘤禀赋研究</div>
+      <div class="desc">广州中医药大学学报(2024)研究显示：出生年份的五运六气特征与肿瘤发生率存在统计学关联，火运不及、土运太过年份出生者肿瘤风险偏高。</div>
+    </div>
+    <div class="card">
+      <div class="label">疫病预测</div>
+      <div class="title">SARS · COVID-19</div>
+      <div class="desc">顾植山团队在SARS前据运气理论预测了疫情时间窗口，COVID-19期间也有多篇论文讨论运气格局与病毒传播的相关性。但预测精度争议极大。</div>
+    </div>
+    <div class="card">
+      <div class="label">气象回归</div>
+      <div class="title">运气-气候对应</div>
+      <div class="desc">多篇论文将运气推演结果与实际气象数据（温/湿/风/降水）做回归分析，部分地区运气模型与气象数据存在显著相关性，但并非普适。</div>
+    </div>
+    <div class="card">
+      <div class="label">文献计量</div>
+      <div class="title">CNKI数据</div>
+      <div class="desc">中国知网收录的运气相关论文近2000篇（截至2024），年发表量持续增长。2019年后受COVID推动，文献量有明显跳跃。</div>
+    </div>
+    <div class="card">
+      <div class="label">体质研究</div>
+      <div class="title">先天运气与体质</div>
+      <div class="desc">多项研究调查出生日期五运六气格局与九种中医体质类型的相关性，部分结果有统计学意义，但效应量偏小。</div>
+    </div>
+    <div class="card">
+      <div class="label">争议</div>
+      <div class="title">方法学批评</div>
+      <div class="desc">运气研究的最大问题是：<strong>多重比较</strong>（年/月/日/时×五运×六气×司天×在泉×主客加临 = 海量组合）产生大量假阳性。多数论文未做多重比较校正。</div>
+    </div>
+  </div>
+
+  <blockquote>核心问题：运气理论有60年基本周期，现代可靠的气象数据仅100-150年，统计学上样本极度匮乏。2-3个周期不足以检验一个周期理论。这是运气研究的方法学困局。</blockquote>
+
+  <h3>值得关注的研究线索</h3>
+  <p>
+    <span class="tag tag-gold">顾植山</span> 龙砂医学流派，运气理论当代领军，倡导"五运六气临床思维"
+    <span style="margin:0 6px">·</span>
+    <span class="tag tag-gold">王琦</span> 国医大师，九种体质学说，与运气理论交叉
+    <span style="margin:0 6px">·</span>
+    <span class="tag tag-gold">杨力</span> 《中医运气学》系统性著作
+    <span style="margin:0 6px">·</span>
+    <span class="tag tag-gold">苏振邦等</span> 肿瘤运气禀赋(2024)
+  </p>
+</section>
+
+<!-- 关键医家 -->
+<section id="figures">
+  <h2>· 关键医家与文献</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>时期</th><th>人物</th><th>贡献</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>唐</td><td><strong>王冰</strong></td><td>补入运气七篇，保存了运气理论最原始的经典文本</td></tr>
+        <tr><td>宋</td><td><strong>刘温舒</strong></td><td>著《素问入式运气论奥》，首次系统整理运气图表</td></tr>
+        <tr><td>金元</td><td><strong>刘完素</strong>（河间）</td><td>以运气学说阐发火热病机，开创河间学派，提出"六气皆从火化"</td></tr>
+        <tr><td>明</td><td><strong>张介宾</strong>（景岳）</td><td>《类经》详注运气，著《图翼》运气图表集大成</td></tr>
+        <tr><td>清</td><td><strong>吴鞠通</strong></td><td>《温病条辨》融运气于温病辨证体系</td></tr>
+        <tr><td>当代</td><td><strong>顾植山</strong></td><td>龙砂医学传承人，推动五运六气临床化、科研化，预测SARS时间窗口</td></tr>
+        <tr><td>当代</td><td><strong>王琦</strong></td><td>体质学说开创者，利用流行病学方法验证运气-体质关系</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 参考资料 -->
+<section id="refs">
+  <h2>· 参考文献与延伸阅读</h2>
+  <ul class="ref-list">
+    <li>
+      <strong>《黄帝内经·素问》运气七篇</strong>
+      <span class="source">— 唐·王冰补入，原文元典</span>
+    </li>
+    <li>
+      <strong>《素问入式运气论奥》</strong>
+      <span class="source">— 宋·刘温舒，最早的运气图表系统</span>
+    </li>
+    <li>
+      <strong>《类经图翼·运气》</strong>
+      <span class="source">— 明·张介宾，运气图表集成</span>
+    </li>
+    <li>
+      <strong>苏振邦等. 基于五运六气理论探讨常见肿瘤患者的禀赋特征与发病的关系.</strong>
+      <span class="source">— 广州中医药大学学报, 2024, 41(8):48-57. <a href="https://xb.zyxy.com.cn/gzzyydxxb/article/abstract/20240807苏振邦48-57" target="_blank">查看</a></span>
+    </li>
+    <li>
+      <strong>Perthes病发病与五运六气的关系初探.</strong>
+      <span class="source">— ACM期刊, 2024. <a href="https://pdf.hanspub.org/acm20240200000_51039031.pdf" target="_blank">PDF</a></span>
+    </li>
+    <li>
+      <strong>中医五运六气思维在临床中的应用.</strong>
+      <span class="source">— 甘草学园. <a href="https://www.igancao.com/aq/article/detail/3b2de8dc9315b31c72e4beed62cee165.html" target="_blank">查看</a></span>
+    </li>
+    <li>
+      <strong>五运六气几乎是中医天人合一的理论范型.</strong>
+      <span class="source">— 新浪财经/文化. <a href="https://cj.sina.com.cn/articles/view/7879922978/1d5ae152201901flx8" target="_blank">查看</a></span>
+    </li>
+    <li>
+      <strong>五运六气快速入门系列.</strong>
+      <span class="source">— 360doc. <a href="https://360doc.cn/article/10276798_769900134.html" target="_blank">查看</a></span>
+    </li>
+    <li>
+      <strong>五运六气临床应用培训暨学术研讨会.</strong>
+      <span class="source">— 中国中医药网, 2016. <a href="https://www.cntcm.com.cn/2016-06/30/content_17412.htm" target="_blank">查看</a></span>
+    </li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  五运六气研究总览 · 认知框架 · 2026
+</footer>
+
+<script>
+// 天干地支
+const TIAN_GAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const DI_ZHI   = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const SHENG_XIAO = ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
+
+// 天干化运
+const GAN_YUN = {
+  '甲':'土运太过 (敦阜)','乙':'金运不及 (从革)','丙':'水运太过 (流衍)','丁':'木运不及 (委和)','戊':'火运太过 (赫曦)',
+  '己':'土运不及 (卑监)','庚':'金运太过 (坚成)','辛':'水运不及 (涸流)','壬':'木运太过 (发生)','癸':'火运不及 (伏明)'
+};
+
+// 地支化气  [司天, 在泉]
+const ZHI_QI = {
+  '子':['少阴君火 (司天)','阳明燥金 (在泉)'],
+  '丑':['太阴湿土 (司天)','太阳寒水 (在泉)'],
+  '寅':['少阳相火 (司天)','厥阴风木 (在泉)'],
+  '卯':['阳明燥金 (司天)','少阴君火 (在泉)'],
+  '辰':['太阳寒水 (司天)','太阴湿土 (在泉)'],
+  '巳':['厥阴风木 (司天)','少阳相火 (在泉)'],
+  '午':['少阴君火 (司天)','阳明燥金 (在泉)'],
+  '未':['太阴湿土 (司天)','太阳寒水 (在泉)'],
+  '申':['少阳相火 (司天)','厥阴风木 (在泉)'],
+  '酉':['阳明燥金 (司天)','少阴君火 (在泉)'],
+  '戌':['太阳寒水 (司天)','太阴湿土 (在泉)'],
+  '亥':['厥阴风木 (司天)','少阳相火 (在泉)']
+};
+
+// 司天六气对应的五行属性
+const QI_WUXING = {
+  '厥阴风木':'木','少阴君火':'火','少阳相火':'火',
+  '太阴湿土':'土','阳明燥金':'金','太阳寒水':'水'
+};
+
+// 五行生克
+const SHENG_KE = {
+  '木':'土','火':'金','土':'水','金':'木','水':'火'
+};
+
+// 太过/不及对应的易感
+const YUN_GAN = {
+  '土运太过 (敦阜)':'脾湿、肾水受邪',
+  '金运不及 (从革)':'肺燥、心火炎上',
+  '水运太过 (流衍)':'肾寒、心火受制',
+  '木运不及 (委和)':'肝郁、肺金乘之',
+  '火运太过 (赫曦)':'心火亢、肺金受灼',
+  '土运不及 (卑监)':'脾虚、肝木乘之',
+  '金运太过 (坚成)':'肺燥、肝木受刑',
+  '水运不及 (涸流)':'肾虚、脾湿反侮',
+  '木运太过 (发生)':'肝亢、脾土受克',
+  '火运不及 (伏明)':'心阳不足、寒气乘之'
+};
+
+function calcYear() {
+  const year = parseInt(document.getElementById('year-input').value);
+  if (!year || year < 1900 || year > 2100) {
+    document.getElementById('calc-result').innerHTML = '请输入 1900-2100 之间的年份';
+    return;
+  }
+
+  // 干支 = 年 - 4
+  const offset = year - 4;
+  const ganIdx = offset % 10;
+  const zhiIdx = offset % 12;
+  const gan = TIAN_GAN[ganIdx];
+  const zhi = DI_ZHI[zhiIdx];
+  const shengXiao = SHENG_XIAO[zhiIdx];
+  const ganZhi = gan + zhi;
+
+  const yunText = GAN_YUN[gan] || '未知';
+  const qiArr = ZHI_QI[zhi] || ['未知','未知'];
+  const siTian = qiArr[0];
+  const zaiQuan = qiArr[1];
+
+  // 司天五行
+  const siTianParts = siTian.split('(')[0].trim();
+  const siTianWx = QI_WUXING[siTianParts] || '?';
+
+  // 岁运五行
+  const yunWx = yunText.startsWith('木') ? '木' : yunText.startsWith('火') ? '火' : yunText.startsWith('土') ? '土' : yunText.startsWith('金') ? '金' : yunText.startsWith('水') ? '水' : '?';
+
+  // 岁运克司天？司天克岁运？生？
+  let keStr = '';
+  if (yunWx !== '?' && siTianWx !== '?') {
+    if (SHENG_KE[yunWx] === siTianWx) keStr = '岁运克司天（气运相制，变化剧烈）';
+    else if (SHENG_KE[siTianWx] === yunWx) keStr = '司天克岁运（气盛压运，天政布）';
+    else if (yunWx === siTianWx) keStr = '岁运与司天同气（气运叠加，偏性极强）';
+    else keStr = '岁运生司天 / 司天生岁运（气运相生，变化平缓）';
+  }
+
+  const ganGan = yunText.includes('不及') ? '易感·小心' : (yunText.includes('太过') ? '本气过盛·注意' : '');
+
+  const html = `
+    <div style="margin-bottom:10px">
+      <strong style="font-size:1.1rem;color:var(--gold)">${year}年 · ${ganZhi}年（${shengXiao}年）</strong>
+    </div>
+    <div><span class="highlight">岁运：</span><span class="accent-text">${yunText}</span></div>
+    <div><span class="highlight">司天（上半年）：</span>${siTian}</div>
+    <div><span class="highlight">在泉（下半年）：</span>${zaiQuan}</div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+      <span class="highlight">气运关系：</span>${keStr}
+    </div>
+    <div style="margin-top:4px">
+      <span class="highlight">五运易感提示：</span>${YUN_GAN[yunText] || '—'}
+    </div>
+  `;
+
+  document.getElementById('calc-result').innerHTML = html;
+}
+
+// 默认推算当前年份
+calcYear();
+</script>
+
+</body>
+</html>
