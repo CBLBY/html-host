@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机构投资的创新之路 · 研究总览</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --surface: #13171f;
+    --surface2: #1a1f2b;
+    --border: #262d3e;
+    --accent: #3b82f6;
+    --accent2: #1d4ed8;
+    --gold: #f0b34b;
+    --green: #34d399;
+    --red: #ef4444;
+    --text: #dde1e8;
+    --text2: #8a94a8;
+    --muted: #5a6478;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  header {
+    padding: 80px 24px 60px;
+    text-align: center;
+    background: linear-gradient(135deg, #0b0d12 0%, #0f1a2e 40%, #0b0d12 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(59,130,246,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  header h1 {
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: 6px;
+    color: var(--text);
+    margin-bottom: 6px;
+    position: relative;
+  }
+  header h1 em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  header .sub {
+    font-size: 1rem;
+    color: var(--text2);
+    letter-spacing: 3px;
+    position: relative;
+  }
+  header .sub a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(240,179,75,0.3);
+  }
+  header .stat-line {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  header .stat-item {
+    text-align: center;
+  }
+  header .stat-item .num {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  header .stat-item .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11,13,18,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  nav a {
+    display: inline-block;
+    padding: 12px 16px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color .15s;
+    letter-spacing: 1px;
+  }
+  nav a:hover { color: var(--accent); }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  section { margin-bottom: 60px; }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 22px;
+    letter-spacing: 2px;
+  }
+  h2 .accent { color: var(--accent); }
+  h2 .gold { color: var(--gold); }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 24px 0 12px;
+  }
+  p { margin-bottom: 14px; color: var(--text2); }
+  p strong { color: var(--text); font-weight: 500; }
+  p .highlight { color: var(--gold); }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 14px 22px;
+    margin: 18px 0;
+    background: rgba(59,130,246,0.05);
+    border-radius: 0 6px 6px 0;
+    color: var(--text2);
+    font-style: italic;
+  }
+  blockquote .attribution {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--surface2); color: var(--accent); font-weight: 500; letter-spacing: 1px; font-size: 0.82rem; }
+  td { color: var(--text2); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(59,130,246,0.03); }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color .2s, transform .15s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card .label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .card .title { font-size: 1rem; color: var(--text); margin-bottom: 6px; font-weight: 500; }
+  .card .desc { font-size: 0.84rem; color: var(--text2); line-height: 1.65; }
+
+  .principle-list { list-style: none; }
+  .principle-list li {
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .principle-list li .num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .principle-list li .content { flex: 1; }
+  .principle-list li .p-title { color: var(--text); font-weight: 500; margin-bottom: 2px; }
+  .principle-list li .p-desc { color: var(--text2); font-size: 0.85rem; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    margin: 2px;
+  }
+  .tag-blue { background: rgba(59,130,246,0.15); color: var(--accent); }
+  .tag-gold { background: rgba(240,179,75,0.15); color: var(--gold); }
+  .tag-green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-red { background: rgba(239,68,68,0.15); color: var(--red); }
+
+  .yale-allocation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .alloc-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  .alloc-item .name { color: var(--text); }
+  .alloc-item .pct { color: var(--gold); font-weight: 500; }
+
+  .ref-list { list-style: none; }
+  .ref-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.84rem;
+    display: flex;
+    gap: 8px;
+  }
+  .ref-list li .idx { color: var(--muted); min-width: 24px; }
+  .ref-list li a { color: var(--accent); text-decoration: none; }
+  .ref-list li a:hover { text-decoration: underline; }
+  .ref-list li .src { color: var(--muted); font-size: 0.78rem; }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6rem; letter-spacing: 3px; }
+    header { padding: 48px 16px 36px; }
+    .container { padding: 24px 16px 48px; }
+    nav a { padding: 10px 10px; font-size: 0.75rem; }
+    .yale-allocation { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    header .stat-line { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>机构投资的<em>创新之路</em></h1>
+  <div class="sub">Pioneering Portfolio Management · David F. Swensen</div>
+  <div class="sub" style="margin-top:4px;font-size:0.85rem;color:var(--muted)">An Unconventional Approach to Institutional Investment</div>
+  <div class="stat-line">
+    <div class="stat-item">
+      <div class="num">$42B →</div>
+      <div class="label">耶鲁捐赠基金规模(2021)</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">10.6%→16.0%</div>
+      <div class="label">年化回报(1985→2021)</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">28×</div>
+      <div class="label">基金增长倍数</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="#about">作者与背景</a>
+  <a href="#overview">核心思想</a>
+  <a href="#allocation">资产配置</a>
+  <a href="#assets">资产类别</a>
+  <a href="#principles">原则</a>
+  <a href="#manager">管理人选择</a>
+  <a href="#rebalance">再平衡</a>
+  <a href="#critique">批判与局限</a>
+  <a href="#personal">个人版启示</a>
+  <a href="#refs">参考</a>
+</nav>
+
+<div class="container">
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>· 作者与背景</h2>
+  <p><strong>大卫·F·斯文森</strong>（David F. Swensen, 1954–2021），耶鲁大学首席投资官（1985–2021），机构投资领域最具影响力的思想家之一。他执掌耶鲁捐赠基金36年，将其从13亿美元增长至420亿美元，年化回报率冠绝全球大学捐赠基金。</p>
+  <p>斯文森是张磊（高瓴资本创始人）的导师——张磊在耶鲁期间正是跟随斯文森学习，回国创立高瓴后前2,000万美元投资款即来自耶鲁捐赠基金——<strong>耶鲁模式在中国的渗透力远不止于学术圈</strong>。</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">生平</div>
+      <div class="title">农民之子</div>
+      <div class="desc">威斯康星州农民家庭出身，耶鲁大学博士，先在所罗门兄弟工作，1985年重返耶鲁掌管捐赠基金。</div>
+    </div>
+    <div class="card">
+      <div class="label">著作</div>
+      <div class="title">双书体系</div>
+      <div class="desc">《机构投资的创新之路》(2000)面向机构投资者；《不落俗套的成功》(2005)面向个人投资者。面向不同读者，但思想内核一致。</div>
+    </div>
+    <div class="card">
+      <div class="label">影响力</div>
+      <div class="title">耶鲁模式</div>
+      <div class="desc">改变了全球机构投资者对另类资产的看法。哈佛、普林斯顿、斯坦福纷纷效仿。死后被称为"机构投资的牛顿"。</div>
+    </div>
+    <div class="card">
+      <div class="label">争议</div>
+      <div class="title">可复制性</div>
+      <div class="desc">耶鲁的成功多大程度归因于策略本身、多大程度归因于耶鲁的品牌/校友网络/免税地位——持续争议。</div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <h2>· 核心思想</h2>
+
+  <blockquote>
+    资产配置是投资决策中最重要的因素——长期投资回报90%以上取决于资产配置，而非个股选择或市场择时。
+    <span class="attribution">— David Swensen</span>
+  </blockquote>
+
+  <p>斯文森的革命性在于他推翻了机构投资的<strong>传统"60/40"模式</strong>（60%股票+40%债券），建立了全新的<strong>"耶鲁模式"</strong>：</p>
+
+  <ol style="color:var(--text2);padding-left:20px;margin-bottom:14px;">
+    <li><strong style="color:var(--text);">股权导向</strong> —远离固定收益，拥抱股权资产的长期增长潜力</li>
+    <li><strong style="color:var(--text);">极度分散</strong> —超越传统股债，纳入私募股权、风险投资、绝对收益、实物资产等</li>
+    <li><strong style="color:var(--text);">拥抱低流动性</strong> —将流动性视为可被定价的风险因子，主动承担流动性风险以获取溢价</li>
+    <li><strong style="color:var(--text);">主动管理</strong> —在低效市场（另类资产）积极选聘顶级管理人获取α</li>
+    <li><strong style="color:var(--text);">严格再平衡</strong> —纪律性地回归目标配置，逆势交易</li>
+  </ol>
+
+  <p>全书的核心论证结构是：<strong>投资哲学 → 资产配置框架 → 具体资产类别分析 → 管理人选择 → 投资组合管理</strong>。它不是操作手册，而是一套可迁移的<strong>思考框架</strong>。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>章节</th><th>主题</th><th>核心内容</th></tr></thead>
+      <tbody>
+        <tr><td>第1章</td><td>投资目标</td><td>捐赠基金的使命——跨代际的购买力维护，而非短期收益最大化</td></tr>
+        <tr><td>第2章</td><td>资产配置</td><td>配置决定90%回报；构建有效边界的核心方法</td></tr>
+        <tr><td>第3章</td><td>传统资产</td><td>国内股票、国外股票、固定收益、现金——各自的角色与局限</td></tr>
+        <tr><td>第4章</td><td>另类资产</td><td>私募股权、风险投资、绝对收益、实物资产——非传统工具的革命</td></tr>
+        <tr><td>第5章</td><td>固定收益</td><td>债券在组合中的真实角色：不是收益源，是"危机缓冲器"</td></tr>
+        <tr><td>第6章</td><td>外部管理人</td><td>如何选择、评估、监督主动管理人与基金</td></tr>
+        <tr><td>第7章</td><td>投资组合管理</td><td>再平衡、战术调整、风险监控的实务框架</td></tr>
+        <tr><td>第8章</td><td>投资流程</td><td>机构治理、决策机制、团队建设</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ASSET ALLOCATION -->
+<section id="allocation">
+  <h2>· 资产配置 <span class="accent">决定 90% 的回报</span></h2>
+
+  <p>斯文森引用Brinson, Hood & Beebower (1986, 1991) 的经典研究——<strong>资产配置解释了机构组合 90% 以上的回报波动</strong>。择时和选股加起来不到10%。</p>
+
+  <p>这不是说选股不重要，而是说<strong>在一个错误的配置框架下，再好的选股也无法拯救你</strong>。一个在前瞻PE中买入科技股组合、但全仓债券的人，即使选到了谷歌和苹果，回报照样平庸。</p>
+
+  <h3>耶鲁捐赠基金配置框架（2021年实际）</h3>
+  <div class="yale-allocation">
+    <div class="alloc-item"><span class="name">风险投资（VC）</span><span class="pct">23.5%</span></div>
+    <div class="alloc-item"><span class="name">杠杆收购（PE Buyout）</span><span class="pct">17.5%</span></div>
+    <div class="alloc-item"><span class="name">海外股票</span><span class="pct">11.5%</span></div>
+    <div class="alloc-item"><span class="name">绝对收益（对冲基金）</span><span class="pct">22.0%</span></div>
+    <div class="alloc-item"><span class="name">实物资产（房地产/油气林矿）</span><span class="pct">10.0%</span></div>
+    <div class="alloc-item"><span class="name">美国股票</span><span class="pct">3.0%</span></div>
+    <div class="alloc-item"><span class="name">固定收益</span><span class="pct">4.0%</span></div>
+    <div class="alloc-item"><span class="name">现金/其他</span><span class="pct">8.5%</span></div>
+  </div>
+
+  <p><span class="tag tag-blue">关键</span> 另类资产合计占比<b style="color:var(--gold);">~73%</b>，传统股债合计仅<b style="color:var(--text2);">~7%</b>。与典型养老金/捐赠基金形成鲜明对比——它们往往50-70%配置在传统股债。</p>
+
+  <h3>传统机构配置 vs 耶鲁模式</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>传统模式</th><th>耶鲁模式</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心资产</td><td>公开市场股债（60/40）</td><td>另类资产主导（70%+）</td></tr>
+        <tr><td>流动性偏好</td><td>高流动性</td><td>主动承担低流动性风险</td></tr>
+        <tr><td>管理方式</td><td>被动指数化</td><td>精选主动管理人</td></tr>
+        <tr><td>收益来源</td><td>市场β</td><td>β+α（尤其在另类资产中）</td></tr>
+        <tr><td>再平衡</td><td>松散</td><td>严格纪律</td></tr>
+        <tr><td>时间视野</td><td>季度/年度</td><td>10年以上</td></tr>
+        <tr><td>费用敏感度</td><td>低费率导向</td><td>高费率但追求高α</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ASSET CLASSES -->
+<section id="assets">
+  <h2>· 资产类别深度拆解</h2>
+
+  <h3>传统资产</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">✔ 美国股票</div>
+      <div class="title">核心增长引擎</div>
+      <div class="desc">长期回报最高的公开市场资产。耶鲁采用主动管理，但斯文森认为个人投资者更适合低成本指数基金（见《不落俗套的成功》）。</div>
+    </div>
+    <div class="card">
+      <div class="label">✔ 海外股票</div>
+      <div class="title">分散化来源</div>
+      <div class="desc">与美国股票不完全相关，提供地域分散。斯文森特别强调新兴市场的分散价值，但也指出其治理风险。</div>
+    </div>
+    <div class="card">
+      <div class="label">⚠ 固定收益</div>
+      <div class="title">不是收益源</div>
+      <div class="desc">斯文森最颠覆性的观点：<strong>债券在组合中的角色不是收益，而是危机中的对冲</strong>。当股市崩盘时，债券提供流动性以再平衡。低配债券是耶鲁模式的核心决策。</div>
+    </div>
+    <div class="card">
+      <div class="label">✖ 现金</div>
+      <div class="title">长期负收益</div>
+      <div class="desc">现金在斯文森的框架中被视为"确定性负收益"资产。持有现金的唯一原因是满足运营需求和再平衡弹药。</div>
+    </div>
+  </div>
+
+  <h3>另类资产 —— 耶鲁模式的核心战场</h3>
+
+  <div class="principle-list" style="margin:12px 0;">
+    <li style="padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:block;">
+      <p style="margin-bottom:4px;"><strong style="color:var(--gold);">风险投资（Venture Capital）</strong> <span class="tag tag-red">最高风险</span></p>
+      <p style="font-size:0.85rem;color:var(--text2);">耶鲁配置比例最高的单一一类资产（23.5%）。斯文森认为VC是<strong>最受益于主动管理的资产类别</strong>——顶级VC基金管理人与平庸者的回报差距巨大。但也警告VC的"J曲线效应"：前几年账面回报惨淡是常态。</p>
+    </li>
+    <li style="padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:block;">
+      <p style="margin-bottom:4px;"><strong style="color:var(--gold);">杠杆收购（Buyouts）</strong> <span class="tag tag-blue">17.5%</span></p>
+      <p style="font-size:0.85rem;color:var(--text2);">收购成熟企业，通过运营改善和财务杠杆提升价值。斯文森强调：PE的分散化效果被高估，因为其估值与公开市场高度相关。但顶级PE管理人确实能创造真实α。</p>
+    </li>
+    <li style="padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:block;">
+      <p style="margin-bottom:4px;"><strong style="color:var(--gold);">绝对收益（Absolute Return / 对冲基金）</strong> <span class="tag tag-green">22%</span></p>
+      <p style="font-size:0.85rem;color:var(--text2);">目标是与市场低相关性的稳定回报。斯文森将其分为"事件驱动"和"价值驱动"两类。他本人对对冲基金行业整体持批判态度——认为行业费用极高而大多数基金经理不产生α。但精选的管理人值得配置。</p>
+    </li>
+    <li style="padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:block;">
+      <p style="margin-bottom:4px;"><strong style="color:var(--gold);">实物资产（Real Assets）</strong> <span class="tag tag-gold">通胀对冲</span></p>
+      <p style="font-size:0.85rem;color:var(--text2);">包括房地产、石油天然气、林地和矿产。核心价值是对抗通胀。林地被斯文森称为"完美的通胀对冲"——树木生长是不依赖市场的真实价值增长。</p>
+    </li>
+  </div>
+</section>
+
+<!-- INVESTMENT PRINCIPLES -->
+<section id="principles">
+  <h2>· 斯文森投资原则</h2>
+
+  <ol class="principle-list">
+    <li>
+      <span class="num">1</span>
+      <div class="content">
+        <div class="p-title">资产配置主导回报</div>
+        <div class="p-desc">将90%的精力花在决定配置比例上，而非挑选个股或预测市场。这是全书的第一性原理。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">2</span>
+      <div class="content">
+        <div class="p-title">股权偏好</div>
+        <div class="p-desc">长期来看，股权资产的回报系统性高于债券和现金。机构投资者应围绕股权构建组合，而非围绕债券。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">3</span>
+      <div class="content">
+        <div class="p-title">流动性是非免费的</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">4</span>
+      <div class="content">
+        <div class="p-title">利用低流动性溢价</div>
+        <div class="p-desc">私募股权、VC、实物资产等低流动性资产提供"流动性溢价"——长期投资者因其耐心而获得额外回报。这是耶鲁模式最核心的套利逻辑。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">5</span>
+      <div class="content">
+        <div class="p-title">严格再平衡</div>
+        <div class="p-desc">最反直觉的原则：<strong>当资产大涨时卖出，当资产大跌时买入</strong>。斯文森将再平衡视为"制度化地逆人性操作"，是保持风险特征稳定、实现低买高卖的纪律工具。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">6</span>
+      <div class="content">
+        <div class="p-title">在低效市场主动管理，在高效市场被动投资</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">7</span>
+      <div class="content">
+        <div class="p-title">警惕委托代理问题</div>
+        <div class="p-desc">资产管理行业充斥着利益冲突：基金经理追求管理规模而非投资收益，投行推销对自己有利的产品。机构投资者必须对这些激励扭曲保持警惕。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">8</span>
+      <div class="content">
+        <div class="p-title">税负敏感（适用美国）</div>
+        <div class="p-desc">虽然耶鲁是免税主体，但斯文森在个人版著作中强调：应税投资者需要将税收效率作为配置的独立维度。</div>
+      </div>
+    </li>
+    <li>
+      <span class="num">9</span>
+      <div class="content">
+        <div class="p-title">长期主义</div>
+        <div class="p-desc">耶鲁的投资期限是"永久"——它不需要在流动性危机时被迫卖出。几乎所有斯文森的策略都建立在这一前提上。如果投资者有短期流动性需求，耶鲁模式不适合你。</div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- MANAGER SELECTION -->
+<section id="manager">
+  <h2>· 外部管理人选择 <span class="gold">筛选漏斗</span></h2>
+
+  <p>斯文森在书中用了整整一章来讨论如何选择外部管理人。他的方法论极其严苛——耶鲁每年评估数百家基金，真正投资的只有个位数。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>评估维度</th><th>核心问题</th><th>红旗信号</th></tr></thead>
+      <tbody>
+        <tr><td>投资哲学</td><td>基金经理是否有清晰、可复制的投资框架？</td><td>"我们找好公司"（太模糊）</td></tr>
+        <tr><td>激励结构</td><td>基金经理是否将自己的钱投入基金？</td><td>管理人不跟投</td></tr>
+        <tr><td>业绩归因</td><td>超额收益来自技能还是运气？是否可解释？</td><td>拒绝讨论亏损案例</td></tr>
+        <tr><td>组织稳定性</td><td>关键人物是否锁定？继任计划？</td><td>明星分析师频繁离职</td></tr>
+        <tr><td>费率结构</td><td>费率是否与创造的α匹配？</td><td>2/20标准条款不接受调整</td></tr>
+        <tr><td>规模管理</td><td>基金规模是否仍在策略容量之内？</td><td>持续募集超出原始策略容量</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote>
+    在任何一个投资领域，主动管理都是零和游戏（扣除费用之前）。大部分基金经理收取了全职费用但提供的只是β——真正能产生α的经理不到10%。
+    <span class="attribution">— Swensen, 关于经理人选择的核心判断</span>
+  </blockquote>
+</section>
+
+<!-- REBALANCE -->
+<section id="rebalance">
+  <h2>· 再平衡的纪律</h2>
+
+  <p>斯文森对再平衡的讨论可能是全书最被低估的部分——它看似简单，却是<strong>最难执行的</strong>。</p>
+
+  <p><strong>为什么再平衡重要</strong>：</p>
+  <ul style="color:var(--text2);padding-left:20px;margin-bottom:14px;">
+    <li>强制实现"低买高卖"——涨多了自动减仓，跌多了自动加仓</li>
+    <li>维持组合的风险特征稳定——如果不对股票上涨再平衡，组合会被动变得比目标更激进</li>
+    <li>产生"危机α"——市场崩溃时，再平衡要求买入被抛弃的资产，这是机构投资者最大的超额收益来源之一</li>
+  </ul>
+
+  <p><strong>再平衡的方法</strong>：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>方法</th><th>描述</th><th>耶鲁选择</th></tr></thead>
+      <tbody>
+        <tr><td>日历再平衡</td><td>每季度/每年固定调整</td><td>作为基础节奏</td></tr>
+        <tr><td>阈值再平衡</td><td>偏离目标比例超过阈值（如5%）时触发</td><td>✅ 主要方法</td></tr>
+        <tr><td>现金流再平衡</td><td>利用新增资金/分红/利息流入进行调节</td><td>✅ 辅助方法，零摩擦</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote>
+    再平衡是"买在恐慌时，卖在欢腾时"的制度化表达。这是机构投资者最接近"确定性优势"的操作。
+    <span class="attribution">— Swensen</span>
+  </blockquote>
+</section>
+
+<!-- CRITIQUE -->
+<section id="critique">
+  <h2>· 批判与局限</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">Limitation 1</div>
+      <div class="title">可复制性存疑</div>
+      <div class="desc">耶鲁的品牌效应让它的门向最好的VC/PE基金敞开——LP名额稀缺，耶鲁因其品牌和长期资金获得了优先认购权。普通机构复制耶鲁配置比例，大概率拿到的是二三线基金。</div>
+    </div>
+    <div class="card">
+      <div class="label">Limitation 2</div>
+      <div class="title">免费搭车之谜</div>
+      <div class="desc">耶鲁是免税主体，而养老金和其他应税机构复制耶鲁模式面临显著的税务效率损失。另类资产的税收处理远比公开市场复杂。</div>
+    </div>
+    <div class="card">
+      <div class="label">Limitation 3</div>
+      <div class="title">流动性错配</div>
+      <div class="desc">耶鲁几乎不需要在危机中变现——它有持续的学生学费和校友捐赠作为资金来源。大多数机构没有这个条件。2008年危机中，许多复制耶鲁模式的养老金被迫折价卖出PE份额以筹集现金。</div>
+    </div>
+    <div class="card">
+      <div class="label">Limitation 4</div>
+      <div class="title">容量问题</div>
+      <div class="desc">当"耶鲁模式"被广泛复制后，大量资金涌入另类资产，推高了资产价格、压缩了未来的预期回报。这也是耶鲁自身在2020年代面临的挑战。</div>
+    </div>
+    <div class="card">
+      <div class="label">Limitation 5</div>
+      <div class="title">J曲线隐性美化</div>
+      <div class="desc">另类资产的估值容易操纵——PE/VC基金在前几年可以选择性报告未实现收益。组合中的"未实现回报"可能被系统性地高估。</div>
+    </div>
+    <div class="card">
+      <div class="label">Limitation 6</div>
+      <div class="title">斯文森本人的警告</div>
+      <div class="desc">斯文森从不认为耶鲁模式是通用模板。他反复强调：<strong>任何投资策略都应适配机构的独特约束——流动需求、风险承受力、人员能力、治理结构</strong>。盲从耶鲁配置本身就是反斯文森的。</div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL -->
+<section id="personal">
+  <h2>· 对个人投资者的启示</h2>
+
+  <p>斯文森的第二本书《不落俗套的成功》为普通投资者提供了具体操作指南。他在书中给出的"斯文森组合"配置方案：</p>
+
+  <div class="yale-allocation" style="margin:16px 0;">
+    <div class="alloc-item"><span class="name">美国股票</span><span class="pct">30%</span></div>
+    <div class="alloc-item"><span class="name">海外发达国家股票</span><span class="pct">15%</span></div>
+    <div class="alloc-item"><span class="name">新兴市场股票</span><span class="pct">5%</span></div>
+    <div class="alloc-item"><span class="name">美国长期国债</span><span class="pct">15%</span></div>
+    <div class="alloc-item"><span class="name">通胀保值债券（TIPS）</span><span class="pct">15%</span></div>
+    <div class="alloc-item"><span class="name">房地产信托（REITs）</span><span class="pct">15%</span></div>
+    <div class="alloc-item"><span class="name">商品期货</span><span class="pct">5%</span></div>
+    <div class="alloc-item" style="color:var(--muted);">合计：100%</div>
+  </div>
+
+  <p>个人投资者的核心启示与机构版一脉相承，但做了<strong>可行性适配</strong>：</p>
+
+  <ul style="color:var(--text2);padding-left:20px;margin-bottom:14px;">
+    <li><strong style="color:var(--text);">放弃择时</strong>——95%的人不应做市场时机判断</li>
+    <li><strong style="color:var(--text);">指数化核心仓位</strong>——个人投资者的α来源是低成本和纪律性，而非选股</li>
+    <li><strong style="color:var(--text);">再平衡是个人投资者的超额收益来源</strong>——你有工作现金流入，这就是天然的再平滑工具</li>
+    <li><strong style="color:var(--text);">警惕主动基金费用</strong>——斯文森对整个共同基金行业持严厉批判态度，认为"大多数基金不值得买"</li>
+    <li><strong style="color:var(--text);">税收效率</strong>——在中国语境下，虽然A股没有资本利得税，但基金分红和交易成本仍值得关注</li>
+  </ul>
+
+  <blockquote>
+    个人投资者最大的优势是灵活、长期、没有被benchmark约束。最大的劣势是情绪和纪律。斯文森的两本书合起来读，就是一个完整的答案。
+  </blockquote>
+</section>
+
+<!-- CONCISE SUMMARY -->
+<section>
+  <h2>· 一句话速读</h2>
+
+  <div style="background:var(--surface);border:1px solid var(--accent);border-radius:8px;padding:20px 24px;">
+    <p style="color:var(--text);font-size:1rem;margin:0;">
+      <strong>资产配置决定一切</strong>。放弃预测市场，放弃择时。围绕股权构建组合，用低流动性溢价增厚回报，用再平衡制度化管理情绪。在高效的公开市场用指数，在低效的另类市场挑最好的管理人。然后——<strong style="color:var(--gold);">什么都不做，坐着等</strong>。
+    </p>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="refs">
+  <h2>· 参考资料</h2>
+  <ul class="ref-list">
+    <li><span class="idx">[1]</span><span>Swensen, David F. <strong>Pioneering Portfolio Management: An Unconventional Approach to Institutional Investment</strong>. Free Press, 2000 (revised 2009). — 原版必读</span></li>
+    <li><span class="idx">[2]</span><span>Swensen, David F. <strong>不落俗套的成功：个人投资者的最佳方法</strong>（Unconventional Success: A Fundamental Approach to Personal Investment）. — 个人版</span></li>
+    <li><span class="idx">[3]</span><span>Brinson, Hood & Beebower. "Determinants of Portfolio Performance." <strong>Financial Analysts Journal</strong>, 1986/1991. — 斯文森引用核心文献</span></li>
+    <li><span class="idx">[4]</span><span>张磊. <strong>价值：我对投资的思考</strong>. 浙江教育出版社, 2020. — 斯文森学生阐述耶鲁模式在中国实践</span></li>
+    <li><span class="idx">[5]</span><span>耶鲁大学捐赠基金年度报告（2021）. — 配置数据来源</span></li>
+    <li><span class="idx">[6]</span><span>CFA Institute. "In Memoriam: David Swensen." 2021. <a href="https://rpc.cfainstitute.org/blogs/enterprising-investor/2021/in-memoriam-david-swensen" target="_blank">阅读</a></span></li>
+    <li><span class="idx">[7]</span><span>Ferguson, Niall. "What Makes Swensen's Yale Model So Successful." 2021. — 对耶鲁模式的深度分析</span></li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  机构投资的创新之路 · 研究总览 · 认知框架 · 2026
+</footer>
+
+</body>
+</html>
