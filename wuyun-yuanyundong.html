@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>圆运动 · 五行流变 · 五运六气 人体内五行流动规律</title>
+<style>
+:root {
+  --bg: #0f0f14;
+  --surface: #181820;
+  --surface2: #20202e;
+  --border: #2a2a3e;
+  --accent: #8b3a3a;
+  --accent-light: #b84a4a;
+  --text: #d8d8e0;
+  --text2: #9898a8;
+  --gold: #c8a86a;
+  --green: #5a9a6a;
+  --blue: #4a7a9a;
+  --wood: #4a9a5a;
+  --fire: #c45a3a;
+  --earth: #c8a040;
+  --metal: #8a8a9a;
+  --water: #3a7aaa;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.85;
+  font-size: 15px;
+}
+
+/* Header */
+header {
+  padding: 80px 24px 60px;
+  text-align: center;
+  background: linear-gradient(135deg, #181820 0%, #1a0a18 50%, #181820 100%);
+  border-bottom: 2px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(139,58,58,0.08) 0%, transparent 60%),
+              radial-gradient(circle at 70% 30%, rgba(200,168,106,0.06) 0%, transparent 50%);
+  animation: pulse 8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+header h1 {
+  font-size: 2.4rem;
+  font-weight: 300;
+  letter-spacing: 6px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  position: relative;
+}
+header h1 em { color: var(--accent-light); font-style: normal; }
+header .sub {
+  font-size: 0.95rem;
+  color: var(--text2);
+  letter-spacing: 4px;
+  position: relative;
+}
+header .sub span { color: var(--accent-light); }
+header .yuan-quote {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--text2);
+  font-style: italic;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+/* Nav */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,15,20,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+nav a {
+  display: inline-block;
+  padding: 14px 16px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color .15s, border-bottom .15s;
+  border-bottom: 2px solid transparent;
+}
+nav a:hover { color: var(--gold); border-bottom-color: var(--accent); }
+nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+.container { max-width: 920px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* Section styling */
+section { margin-bottom: 64px; }
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gold);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+  letter-spacing: 3px;
+}
+.section-title .num { color: var(--accent); font-weight: 300; font-size: 1rem; margin-right: 8px; }
+.section-title .accent { color: var(--accent-light); }
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 28px 0 14px;
+}
+h3 .tag { 
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-weight: 400;
+}
+.tag-wood { background: rgba(74,154,90,0.2); color: var(--wood); }
+.tag-fire { background: rgba(196,90,58,0.2); color: var(--fire); }
+.tag-earth { background: rgba(200,160,64,0.2); color: var(--earth); }
+.tag-metal { background: rgba(138,138,154,0.2); color: var(--metal); }
+.tag-water { background: rgba(58,122,170,0.2); color: var(--water); }
+.tag-core { background: rgba(139,58,58,0.2); color: var(--accent-light); }
+
+p { margin-bottom: 16px; color: var(--text2); }
+p strong { color: var(--text); font-weight: 500; }
+p .highlight { color: var(--gold); }
+
+blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  margin: 20px 0;
+  background: rgba(139,58,58,0.06);
+  border-radius: 0 8px 8px 0;
+  color: var(--text2);
+}
+blockquote strong { color: var(--gold); }
+
+/* SVG canvas area */
+.diagram-area {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+  overflow: hidden;
+}
+.diagram-area svg { display: block; margin: 0 auto; max-width: 100%; }
+.diagram-caption {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text2);
+  margin-top: 12px;
+  letter-spacing: 1px;
+}
+.diagram-caption em { color: var(--gold); font-style: normal; }
+
+/* Info cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: border-color .2s;
+}
+.info-card:hover { border-color: var(--accent); }
+.info-card .icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+.info-card h4 { font-size: 0.95rem; font-weight: 500; color: var(--gold); margin-bottom: 8px; }
+.info-card p { font-size: 0.85rem; margin-bottom: 0; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 20px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--surface2);
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+td { color: var(--text2); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* Highlight box */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(139,58,58,0.08), rgba(200,168,106,0.04));
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.highlight-box h4 { color: var(--gold); font-weight: 500; margin-bottom: 10px; letter-spacing: 1px; }
+.highlight-box p { margin-bottom: 8px; }
+.highlight-box p:last-child { margin-bottom: 0; }
+
+/* Flow diagram inline */
+.flow-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Key point callout */
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(139,58,58,0.08);
+  border-left: 4px solid var(--accent-light);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+.callout .marker { color: var(--accent-light); font-size: 1.2rem; line-height: 1; }
+.callout p { margin-bottom: 0; font-size: 0.9rem; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  header h1 { font-size: 1.6rem; letter-spacing: 3px; }
+  .section-title { font-size: 1.2rem; }
+  .info-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>圆运动 · 五行<em>流变</em></h1>
+  <div class="sub">五运六气 × 人体内五行流动的规律 · <span>圆运动的古中医学</span> 迭代</div>
+  <div class="yuan-quote">"中气如轴，四维如轮。轴运轮行，轮运轴灵。"<br>—— 彭子益《圆运动的古中医学》</div>
+</header>
+
+<nav>
+  <a href="#yuan" class="active">圆运动模型</a>
+  <a href="#wuxing-flow">五行升降</a>
+  <a href="#zangfu-cycle">脏腑圆运动</a>
+  <a href="#jingluo">十二经流注</a>
+  <a href="#wuyun-connection">五运六气连接</a>
+  <a href="#pathology">病理与圆运动</a>
+  <a href="#calc">运气推算</a>
+</nav>
+
+<div class="container">
+
+<!-- ============ SECTION 1: 圆运动模型 ============ -->
+<section id="yuan">
+  <div class="section-title"><span class="num">壹</span>圆运动 · 核心模型</div>
+
+  <p>彭子益《圆运动的古中医学》的核心命题：<strong>人体即一小宇宙</strong>。宇宙大气的圆运动产生五行，人秉大气五行而生脏腑。人体内五行的流动，不是静态的配属关系，而是 <span class="highlight">一个完整的、永不停息的圆运动</span>。</p>
+
+  <div class="callout">
+    <div class="marker">⚡</div>
+    <p><strong>关键洞见：</strong>五运六气描述的是<em>天道</em>的圆运动（天干化运、地支化气），而《圆运动的古中医学》描述的是<em>人道</em>的圆运动（脏腑升降、经络流注）。两者是同一圆运动在不同尺度上的投影。</p>
+  </div>
+
+  <div class="diagram-area">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="max-width:480px">
+      <defs>
+        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c8a040" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#c8a040" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background glow -->
+      <circle cx="300" cy="300" r="200" fill="url(#centerGlow)"/>
+
+      <!-- Outer circle -->
+      <circle cx="300" cy="300" r="220" fill="none" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="4,4"/>
+
+      <!-- Chinese character 圆 in center -->
+      <text x="300" y="270" text-anchor="middle" fill="#8b3a3a" font-size="48" opacity="0.15" font-family="serif">圆</text>
+
+      <!-- Axis - center earth -->
+      <circle cx="300" cy="300" r="28" fill="none" stroke="#c8a040" stroke-width="2" filter="url(#glow)"/>
+      <text x="300" y="306" text-anchor="middle" fill="#c8a040" font-size="16" font-weight="500">土</text>
+      <text x="300" y="325" text-anchor="middle" fill="#9898a8" font-size="9">中气</text>
+
+      <!-- Spokes -->
+      <line x1="300" y1="28" x2="300" y2="300" stroke="#2a2a3e" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <line x1="300" y1="300" x2="300" y2="572" stroke="#2a2a3e" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <line x1="28" y1="300" x2="300" y2="300" stroke="#2a2a3e" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <line x1="300" y1="300" x2="572" y2="300" stroke="#2a2a3e" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+      <!-- Rising arrow: 木 (left) -->
+      <path d="M 100,380 Q 100,300 160,220" fill="none" stroke="#4a9a5a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+      <circle cx="85" cy="300" r="40" fill="none" stroke="#4a9a5a" stroke-width="2" opacity="0.6"/>
+      <text x="85" y="306" text-anchor="middle" fill="#4a9a5a" font-size="20" font-weight="500">木</text>
+      <text x="85" y="324" text-anchor="middle" fill="#4a9a5a" font-size="9">升</text>
+      <text x="130" y="230" fill="#9898a8" font-size="9" transform="rotate(-30,130,230)">疏泄上升</text>
+
+      <!-- Top arrow: 火 (top) -->
+      <circle cx="300" cy="85" r="40" fill="none" stroke="#c45a3a" stroke-width="2" opacity="0.6"/>
+      <text x="300" y="91" text-anchor="middle" fill="#c45a3a" font-size="20" font-weight="500">火</text>
+      <text x="300" y="109" text-anchor="middle" fill="#c45a3a" font-size="9">浮</text>
+      <text x="310" y="140" fill="#9898a8" font-size="9">宣通上浮</text>
+
+      <!-- Falling arrow: 金 (right) -->
+      <path d="M 500,220 Q 500,300 440,380" fill="none" stroke="#8a8a9a" stroke-width="2.5"/>
+      <circle cx="515" cy="300" r="40" fill="none" stroke="#8a8a9a" stroke-width="2" opacity="0.6"/>
+      <text x="515" y="306" text-anchor="middle" fill="#8a8a9a" font-size="20" font-weight="500">金</text>
+      <text x="515" y="324" text-anchor="middle" fill="#8a8a9a" font-size="9">降</text>
+      <text x="430" y="230" fill="#9898a8" font-size="9" transform="rotate(30,430,230)">收敛下降</text>
+
+      <!-- Bottom arrow: 水 (bottom) -->
+      <circle cx="300" cy="515" r="40" fill="none" stroke="#3a7aaa" stroke-width="2" opacity="0.6"/>
+      <text x="300" y="521" text-anchor="middle" fill="#3a7aaa" font-size="20" font-weight="500">水</text>
+      <text x="300" y="539" text-anchor="middle" fill="#3a7aaa" font-size="9">沉</text>
+      <text x="310" y="485" fill="#9898a8" font-size="9">封藏下沉</text>
+
+      <!-- Circular arrows showing the rotation -->
+      <defs>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0,0 L 10,5 L 0,10 Z" fill="#4a9a5a"/>
+        </marker>
+        <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0,0 L 10,5 L 0,10 Z" fill="#c8a040"/>
+        </marker>
+      </defs>
+
+      <!-- Circular rotation paths -->
+      <path d="M 130,240 A 180 180 0 0 1 240,130" fill="none" stroke="#4a9a5a" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+      <path d="M 240,130 A 180 180 0 0 1 470,240" fill="none" stroke="#c45a3a" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+      <path d="M 470,240 A 180 180 0 0 1 360,470" fill="none" stroke="#8a8a9a" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+      <path d="M 360,470 A 180 180 0 0 1 130,240" fill="none" stroke="#3a7aaa" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+
+      <!-- Direction arrows on the circle -->
+      <path d="M 220,112 Q 230,105 240,120" fill="none" stroke="#4a9a5a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <path d="M 440,150 Q 450,160 435,170" fill="none" stroke="#c45a3a" stroke-width="1.5" marker-end="url(#arrow-gold)"/>
+      <path d="M 440,430 Q 430,440 415,425" fill="none" stroke="#8a8a9a" stroke-width="1.5"/>
+      <path d="M 160,440 Q 150,430 165,415" fill="none" stroke="#3a7aaa" stroke-width="1.5"/>
+
+      <!-- "轴" label -->
+      <text x="300" y="345" text-anchor="middle" fill="#9898a8" font-size="8">▲ 轴</text>
+    </svg>
+    <div class="diagram-caption"><em>五行圆运动模型</em> — 中气（土）居中央为轴，木升、火浮、金降、水沉为四维之轮</div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>▎中气如轴，四维如轮</h4>
+    <p><strong>轴运轮行：</strong>脾胃中气正常旋转，肝木才能从左升，肺金才能从右降，心火才能浮于上，肾水才能沉于下。</p>
+    <p><strong>轮运轴灵：</strong>四维升降通畅，中气自然充盈。两者互为因果，构成人体生命活动的动态平衡。</p>
+    <p>此模型直接继承黄元御"一气周流"思想，而彭子益以<strong>河图</strong>为框架将其体系化。人体内五行流动，本质就是这副圆运动图在每一瞬间的运转状态。</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: 五行升降 ============ -->
+<section id="wuxing-flow">
+  <div class="section-title"><span class="num">贰</span>五行 · 升降浮沉</div>
+
+  <p>彭子益将五行的本质定义为 <strong>大气圆运动的五种物质形态</strong>。人体内五行流动规律，对应着大自然一年的气机变化：春升、夏浮、秋降、冬沉，土运于中。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>五行</th>
+          <th>运动方向</th>
+          <th>脏腑</th>
+          <th>功能（作用）</th>
+          <th>对应节气</th>
+          <th>病理偏向</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--wood)">木</td>
+          <td>升</td>
+          <td>肝（脏）→ 胆（腑）</td>
+          <td>疏泄</td>
+          <td>春分 → 立夏</td>
+          <td>疏泄不及→郁；太过→风动</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">火（君）</td>
+          <td>浮</td>
+          <td>心（脏）→ 小肠（腑）</td>
+          <td>宣通</td>
+          <td>春分 → 立夏（君）</td>
+          <td>宣通不及→血痹；太过→舌痛心烦</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">火（相）</td>
+          <td>降（浮→沉的关键）</td>
+          <td>心包（脏）→ 三焦（腑）</td>
+          <td>燔灼</td>
+          <td>小满 → 小暑</td>
+          <td>不降→发热燔灼于外；不及→下寒</td>
+        </tr>
+        <tr>
+          <td style="color:var(--earth)">土</td>
+          <td>中枢</td>
+          <td>脾（脏）→ 胃（腑）</td>
+          <td>运化</td>
+          <td>长夏</td>
+          <td>运化不及→腹满停食</td>
+        </tr>
+        <tr>
+          <td style="color:var(--metal)">金</td>
+          <td>降</td>
+          <td>肺（脏）→ 大肠（腑）</td>
+          <td>收敛</td>
+          <td>秋分 → 立冬</td>
+          <td>收敛不及→汗多咳逆；太过→恶寒胸闷</td>
+        </tr>
+        <tr>
+          <td style="color:var(--water)">水</td>
+          <td>沉</td>
+          <td>肾（脏）→ 膀胱（腑）</td>
+          <td>封藏</td>
+          <td>小雪 → 小寒</td>
+          <td>封藏不及→阳越头晕；无太过之病</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>相火：圆运动的枢纽</h3>
+  <p>彭子益特别强调 <strong>"五行各一，惟火有二"</strong>。君火主升、相火主降。君火由相火转化而来，相火又必须通过秋金收敛降入水中。这个"<span class="highlight">火降水中</span>"的过程，是圆运动最关键的环节——它完成了能量从天上到地下、从浮到沉的循环。</p>
+
+  <div class="callout">
+    <div class="marker">⟳</div>
+    <p><strong>相火下降的过程：</strong> 夏时太阳热力（相火）→ 秋金收敛 → 降入土下 → 藏于水中 → 来年春季升出为木气（君火之根）。人体中，胆经相火右降入肾水，肾水温升化肝木，肝木左升生心火。这就是人体内能量流动的闭环。</p>
+  </div>
+
+  <h3>五行相生相克：圆运动的自我维持</h3>
+  <div class="info-grid">
+    <div class="info-card">
+      <span class="icon">🌱</span>
+      <h4>相生 · 轮转次序</h4>
+      <p>木生火（肝血温升化心火）→ 火生土（心火下煦生脾土）→ 土生金（脾精上输养肺金）→ 金生水（肺气肃降水归肾）→ 水生木（肾水温升养肝木）。<strong>此为圆运动先后之序。</strong></p>
+    </div>
+    <div class="info-card">
+      <span class="icon">⚖️</span>
+      <h4>相克 · 制衡平衡</h4>
+      <p>金克木（肺降制肝升太过）→ 火克金（心宣通制肺收敛太过）→ 水克火（肾封藏制心宣通太过）→ 土克水（脾运化制肾封藏太过）→ 木克土（肝疏泄制脾运化不及）。<strong>此为圆运动对待之衡。</strong></p>
+    </div>
+    <div class="info-card">
+      <span class="icon">🌀</span>
+      <h4>相生相克本质</h4>
+      <p>"相生者，补其不足。相克者，制其太过。相生相克，皆圆运动自身维持自身运动之圆而已。"——彭子益。五行之间没有真正的对抗，只有圆运动内部的 <strong>动态平衡</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: 脏腑圆运动 ============ -->
+<section id="zangfu-cycle">
+  <div class="section-title"><span class="num">叁</span>脏腑 · 升降出入</div>
+
+  <p>人秉大气的五行之气而生脏腑。彭子益指出：<strong>肝胆的体质均在右，但肝经的作用在左（升），胆经的作用在右（降）</strong>。这一看似矛盾的论述，揭示了一个核心规律：脏腑的<em>位置</em>不等于<em>功能运动方向</em>。</p>
+
+  <div class="diagram-area">
+    <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg" style="max-width:500px">
+      <!-- Body outline -->
+      <ellipse cx="300" cy="260" rx="160" ry="230" fill="none" stroke="#2a2a3e" stroke-width="1.5"/>
+
+      <!-- Lungs 肺 -->
+      <ellipse cx="240" cy="80" rx="40" ry="22" fill="rgba(138,138,154,0.15)" stroke="#8a8a9a" stroke-width="1.5"/>
+      <text x="240" y="86" text-anchor="middle" fill="#8a8a9a" font-size="13">肺</text>
+
+      <ellipse cx="360" cy="80" rx="40" ry="22" fill="rgba(138,138,154,0.15)" stroke="#8a8a9a" stroke-width="1.5"/>
+      <text x="360" y="86" text-anchor="middle" fill="#8a8a9a" font-size="13">肺</text>
+
+      <!-- Heart 心 -->
+      <circle cx="300" cy="130" r="22" fill="rgba(196,90,58,0.15)" stroke="#c45a3a" stroke-width="1.5"/>
+      <text x="300" y="136" text-anchor="middle" fill="#c45a3a" font-size="13">心</text>
+
+      <!-- Liver 肝 (right side of body = left in image) -->
+      <path d="M 170,220 Q 150,200 155,250 Q 160,280 190,280 L 210,260 Z" fill="rgba(74,154,90,0.15)" stroke="#4a9a5a" stroke-width="1.5"/>
+      <text x="185" y="250" text-anchor="middle" fill="#4a9a5a" font-size="13">肝</text>
+
+      <!-- Stomach 胃 (right) -->
+      <path d="M 385,210 Q 420,210 420,260 Q 420,290 385,290 L 365,270 Z" fill="rgba(200,160,64,0.1)" stroke="#c8a040" stroke-width="1.2"/>
+      <text x="395" y="255" text-anchor="middle" fill="#c8a040" font-size="11">胃</text>
+
+      <!-- Spleen 脾 (left) -->
+      <circle cx="215" cy="290" r="18" fill="rgba(200,160,64,0.1)" stroke="#c8a040" stroke-width="1.5"/>
+      <text x="215" y="295" text-anchor="middle" fill="#c8a040" font-size="12">脾</text>
+
+      <!-- Kidneys 肾 -->
+      <ellipse cx="250" cy="390" rx="25" ry="16" fill="rgba(58,122,170,0.15)" stroke="#3a7aaa" stroke-width="1.5"/>
+      <text x="250" y="395" text-anchor="middle" fill="#3a7aaa" font-size="12">肾</text>
+      <ellipse cx="350" cy="390" rx="25" ry="16" fill="rgba(58,122,170,0.15)" stroke="#3a7aaa" stroke-width="1.5"/>
+      <text x="350" y="395" text-anchor="middle" fill="#3a7aaa" font-size="12">肾</text>
+
+      <!-- Flow arrows -->
+      <!-- 肝气左升 → -->
+      <path d="M 195,238 Q 220,160 280,130" fill="none" stroke="#4a9a5a" stroke-width="2" marker-end="url(#arrow-green)" stroke-dasharray="6,3"/>
+      <text x="215" y="175" fill="#4a9a5a" font-size="9">木气左升</text>
+
+      <!-- 心火下降 -->
+      <path d="M 310,150 Q 340,200 370,230" fill="none" stroke="#c45a3a" stroke-width="2" marker-end="url(#arrow-gold)" stroke-dasharray="6,3"/>
+      <text x="340" y="190" fill="#c45a3a" font-size="9">心火下煦</text>
+
+      <!-- 胃降（右降） -->
+      <path d="M 395,295 Q 380,360 350,390" fill="none" stroke="#c8a040" stroke-width="1.5" marker-end="url(#arrow-gold)" stroke-dasharray="4,2"/>
+      <text x="370" y="350" fill="#c8a040" font-size="8">胃气右降</text>
+
+      <!-- 肺气右降 -->
+      <path d="M 360,95 Q 400,150 380,210" fill="none" stroke="#8a8a9a" stroke-width="2" marker-end="url(#arrow-gold)" stroke-dasharray="6,3"/>
+      <text x="380" y="150" fill="#8a8a9a" font-size="9">金气右降</text>
+
+      <!-- 肾水上升 -->
+      <path d="M 250,375 Q 230,330 220,308" fill="none" stroke="#3a7aaa" stroke-width="2" marker-end="url(#arrow-green)" stroke-dasharray="6,3"/>
+      <text x="210" y="345" fill="#3a7aaa" font-size="9">水气上升</text>
+
+      <!-- Central axis 中气 -->
+      <circle cx="300" cy="240" r="15" fill="rgba(200,168,106,0.12)" stroke="#c8a040" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="300" y="245" text-anchor="middle" fill="#c8a040" font-size="10">中</text>
+
+      <!-- Defs for markers -->
+      <defs>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0,0 L 10,5 L 0,10 Z" fill="#4a9a5a"/>
+        </marker>
+        <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0,0 L 10,5 L 0,10 Z" fill="#c8a040"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diagram-caption"><em>人体脏腑五行升降简图</em> — 左升右降，中气运转</div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>▎人体圆运动的脏腑分工</h4>
+    <p><strong>左升路线（木→火）：</strong> 肾水温升 → 肝木疏泄升发 → 心火宣通浮散</p>
+    <p><strong>右降路线（金→水）：</strong> 肺金收敛 → 胆经相火右降 → 胃气下降 → 肾水封藏</p>
+    <p><strong>中枢（土）：</strong> 脾升胃降，运化水谷精微，为四维升降提供物质基础。"中气如轴，四维如轮"，轴不转则轮不运。</p>
+  </div>
+
+  <h3>脏腑升降的经典辨证</h3>
+  <blockquote>
+    <strong>黄元御圆圈论：</strong>脾升→胃降→肝升→胆降→心火下煦→肺金右降→肾水温升。任何一个环节阻滞（如"胃气不降""胆火不降""肝气不升"），整个圆运动就会失圆，疾病由此而生。
+  </blockquote>
+
+  <div class="flow-diagram">
+    <p style="font-size:0.9rem;color:var(--text2);margin-bottom:16px;">人体内五行流动的完整闭环</p>
+    <p style="font-size:0.95rem;letter-spacing:1px;">
+      <span style="color:var(--water)">肾水封藏</span> 
+      <span style="color:var(--text2)">→ 水温上升 →</span> 
+      <span style="color:var(--wood)">肝木疏泄</span> 
+      <span style="color:var(--text2)">→ 木气升发 →</span> 
+      <span style="color:var(--fire)">心火宣通</span> 
+      <span style="color:var(--text2)">→ 火浮于上 → 火降（相火）→</span>
+      <span style="color:var(--metal)">肺金收敛</span> 
+      <span style="color:var(--text2)">→ 金气右降 →</span> 
+      <span style="color:var(--water)">肾水封藏</span>
+    </p>
+    <p style="font-size:0.85rem;color:var(--gold);margin-top:12px;">↑ 中气（脾胃）旋转于中央，驱动此轮 ∞</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: 十二经流注 ============ -->
+<section id="jingluo">
+  <div class="section-title"><span class="num">肆</span>十二经 · 圆运动流注</div>
+
+  <p>彭子益指出，十二经本身就是一个完整的圆运动：手之三阴从胸走手，手之三阳从手走头，足之三阳从头走足，足之三阴从足走胸。"默记此图，为研究本书第一功夫。"</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>经脉</th>
+          <th>五行属性</th>
+          <th>走向</th>
+          <th>运动方向</th>
+          <th>核心作用</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>足太阳膀胱经</td>
+          <td style="color:var(--water)">壬水（阳水）</td>
+          <td>头→足</td>
+          <td style="color:var(--metal)">降</td>
+          <td>寒水封藏，由上而下</td>
+        </tr>
+        <tr>
+          <td>足少阴肾经</td>
+          <td style="color:var(--water)">癸水（阴水）</td>
+          <td>足→胸</td>
+          <td style="color:var(--wood)">升</td>
+          <td>阴水封藏，自下而上</td>
+        </tr>
+        <tr>
+          <td>足少阳胆经</td>
+          <td style="color:var(--wood)">甲木（阳木）</td>
+          <td>头→足</td>
+          <td style="color:var(--metal)">降</td>
+          <td>相火右降入水</td>
+        </tr>
+        <tr>
+          <td>足厥阴肝经</td>
+          <td style="color:var(--wood)">乙木（阴木）</td>
+          <td>足→胸</td>
+          <td style="color:var(--wood)">升</td>
+          <td>疏泄升发</td>
+        </tr>
+        <tr>
+          <td>手少阴心经</td>
+          <td style="color:var(--fire)">丁火（阴火）</td>
+          <td>胸→手</td>
+          <td style="color:var(--metal)">降</td>
+          <td>君火宣通由上而下</td>
+        </tr>
+        <tr>
+          <td>手太阳小肠经</td>
+          <td style="color:var(--fire)">丙火（阳火）</td>
+          <td>手→头</td>
+          <td style="color:var(--wood)">升</td>
+          <td>阳火宣通自下而上</td>
+        </tr>
+        <tr>
+          <td>手厥阴心包经</td>
+          <td style="color:var(--fire)">相火（阴）</td>
+          <td>胸→手</td>
+          <td style="color:var(--metal)">降</td>
+          <td>相火燔灼由上而下</td>
+        </tr>
+        <tr>
+          <td>手少阳三焦经</td>
+          <td style="color:var(--fire)">相火（阳）</td>
+          <td>手→头</td>
+          <td style="color:var(--wood)">升</td>
+          <td>相火燔灼自下而上</td>
+        </tr>
+        <tr>
+          <td>足阳明胃经</td>
+          <td style="color:var(--earth)">戊土（阳土）</td>
+          <td>头→足</td>
+          <td style="color:var(--metal)">降</td>
+          <td>胃气下降为顺</td>
+        </tr>
+        <tr>
+          <td>足太阴脾经</td>
+          <td style="color:var(--earth)">己土（阴土）</td>
+          <td>足→胸</td>
+          <td style="color:var(--wood)">升</td>
+          <td>脾气上升为健</td>
+        </tr>
+        <tr>
+          <td>手太阴肺经</td>
+          <td style="color:var(--metal)">辛金（阴金）</td>
+          <td>胸→手</td>
+          <td style="color:var(--metal)">降</td>
+          <td>收敛肃降</td>
+        </tr>
+        <tr>
+          <td>手阳明大肠经</td>
+          <td style="color:var(--metal)">庚金（阳金）</td>
+          <td>手→头</td>
+          <td style="color:var(--wood)">升</td>
+          <td>传导化糟粕</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="marker">⏎</div>
+    <p><strong>十二经流注规律：</strong>每一对脏腑的经络，都构成一个小圆运动——脏经自下而上（升），腑经自上而下（降）。十二条经串联起来，在人体形成一个 <strong>头→手→胸→足→头</strong> 的大圆运动。五运六气的外在周期变化，通过这个大圆与人体气机耦合。</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 5: 五运六气连接 ============ -->
+<section id="wuyun-connection">
+  <div class="section-title"><span class="num">伍</span>五运六气 · 天人气交</div>
+
+  <p>五运六气是天地大气的圆运动在 <strong>年周期尺度</strong> 上的表达，而人体内的五行圆运动是同一原理在 <strong>个体身内尺度</strong> 上的表达。两者通过"<span class="highlight">气交</span>"实现耦合。</p>
+
+  <div class="diagram-area">
+    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" style="max-width:580px">
+      <!-- Top band: 天道 -->
+      <rect x="40" y="20" width="520" height="80" rx="8" fill="rgba(200,168,106,0.06)" stroke="#c8a040" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="60" y="48" fill="#c8a040" font-size="13" font-weight="500">天道 · 五运六气</text>
+      <text x="60" y="68" fill="#9898a8" font-size="11">天干化五运（木火土金水 · 太过不及）+ 地支化六气（风热暑湿燥寒）</text>
+      <text x="60" y="86" fill="#9898a8" font-size="11">周期：十年一运，六年一气，六十年一甲子</text>
+
+      <!-- Arrow down -->
+      <path d="M 300,100 L 300,130" fill="none" stroke="#8b3a3a" stroke-width="1.5" marker-end="url(#arrow-down)"/>
+
+      <!-- Mid band: 气交 -->
+      <rect x="120" y="130" width="360" height="40" rx="20" fill="rgba(139,58,58,0.12)" stroke="#8b3a3a" stroke-width="1.5"/>
+      <text x="300" y="155" text-anchor="middle" fill="#c8a040" font-size="13" font-weight="500">气交 · 天人气化交感</text>
+
+      <!-- Arrow down -->
+      <path d="M 300,170 L 300,200" fill="none" stroke="#8b3a3a" stroke-width="1.5" marker-end="url(#arrow-down)"/>
+
+      <!-- Bottom band: 人道 -->
+      <rect x="40" y="200" width="520" height="100" rx="8" fill="rgba(74,154,90,0.06)" stroke="#4a9a5a" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="60" y="228" fill="#4a9a5a" font-size="13" font-weight="500">人道 · 人体圆运动</text>
+      <text x="60" y="248" fill="#9898a8" font-size="11">脾升胃降（中轴）→ 肝升肺降（四维）→ 心火下煦 → 肾水温升</text>
+      <text x="60" y="268" fill="#9898a8" font-size="11">周期：一息一运（一呼一吸），日夜一循环，四时一升降</text>
+      <text x="60" y="288" fill="#9898a8" font-size="11">外感时病 = 天道圆运动失常 → 气交失序 → 人道圆运动受阻</text>
+
+      <defs>
+        <marker id="arrow-down" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M 0,0 L 5,10 L 10,0 Z" fill="#8b3a3a"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diagram-caption"><em>三天圆运动模型</em> — 天道（五运六气）→ 气交 → 人道（人体圆运动）</div>
+  </div>
+
+  <h3>六气与脏腑圆运动的对应</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>六气</th>
+          <th>主时</th>
+          <th>人体对应</th>
+          <th>圆运动受影响环节</th>
+          <th>易发病位</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--wood)">厥阴风木</td>
+          <td>大寒→惊蛰（初之气）</td>
+          <td>肝、胆</td>
+          <td>木气升发受阻→圆运动起点卡滞</td>
+          <td>风病、眩晕、抽搐</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">少阴君火</td>
+          <td>春分→立夏（二之气）</td>
+          <td>心、小肠</td>
+          <td>火气宣通过度→圆运动上浮不降</td>
+          <td>热病、心烦、口疮</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">少阳相火</td>
+          <td>小满→小暑（三之气）</td>
+          <td>心包、三焦</td>
+          <td>相火不降→圆运动上热下寒</td>
+          <td>暑病、发热、中暑</td>
+        </tr>
+        <tr>
+          <td style="color:var(--earth)">太阴湿土</td>
+          <td>大暑→白露（四之气）</td>
+          <td>脾、胃</td>
+          <td>土气不运→圆运动中枢停滞</td>
+          <td>湿病、泄泻、水肿</td>
+        </tr>
+        <tr>
+          <td style="color:var(--metal)">阳明燥金</td>
+          <td>秋分→立冬（五之气）</td>
+          <td>肺、大肠</td>
+          <td>金气收敛异常→圆运动右降失灵</td>
+          <td>燥病、咳逆、便秘</td>
+        </tr>
+        <tr>
+          <td style="color:var(--water)">太阳寒水</td>
+          <td>小雪→小寒（终之气）</td>
+          <td>肾、膀胱</td>
+          <td>水气封藏失职→圆运动根基不固</td>
+          <td>寒病、腰痛、阳痿</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box">
+    <h4>▎五运太过不及对人体圆运动的影响</h4>
+    <p><strong>岁运太过：</strong>某一行气偏盛，打破圆运动平衡，导致"<span class="highlight">所胜受抑、所不胜反侮</span>"。例如木运太过→肝气横逆→克脾土（木克土）→脾升胃降失灵→中轴卡顿。</p>
+    <p><strong>岁运不及：</strong>某一行气不足，所不胜之气来乘。例如木运不及→金气来克（金克木）→肝气不升→左升路线受阻→心火不旺→整个圆运动偏向右降而左升不足。</p>
+    <p>此即五运六气作用于人体内五行流动的核心机制——<strong>改变圆运动的振幅和相位</strong>。</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 6: 病理 ============ -->
+<section id="pathology">
+  <div class="section-title"><span class="num">陆</span>病理 · 圆运动失圆</div>
+
+  <p>彭子益对病理的定义极为简洁："<strong>中医的病理，只是轴不旋转，轮不升降而已。</strong>"人体内五行流动偏离圆运动，即为疾病。</p>
+
+  <h3>六类圆运动失圆模式</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>模式</th>
+          <th>表现</th>
+          <th>脏腑</th>
+          <th>症状举例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--wood)">木气疏泄不及</td>
+          <td>水中的火气不足</td>
+          <td>肝、胆</td>
+          <td>无汗、尿少、粪难、胁痛、月经来迟</td>
+        </tr>
+        <tr>
+          <td style="color:var(--wood)">木气疏泄太过</td>
+          <td>金气不足，不能制木</td>
+          <td>肝、肺</td>
+          <td>自汗、遗精、发热、头晕、月经来早</td>
+        </tr>
+        <tr>
+          <td style="color:var(--metal)">金气收敛不及</td>
+          <td>木气过于疏泄</td>
+          <td>肺、肝</td>
+          <td>汗多、头晕、咳逆、遗泄、尿多</td>
+        </tr>
+        <tr>
+          <td style="color:var(--metal)">金气收敛太过</td>
+          <td>火气不能宣通</td>
+          <td>肺、心</td>
+          <td>恶寒、胸闷、无汗、粪艰</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">火气宣通不及</td>
+          <td>木火之气虚</td>
+          <td>心、小肠</td>
+          <td>血痹、神倦、口淡、血寒</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">火气宣通太过</td>
+          <td>中气虚、金气不降</td>
+          <td>心、肺、脾</td>
+          <td>舌痛、喉痛、心跳、心烦</td>
+        </tr>
+        <tr>
+          <td style="color:var(--water)">水气封藏不及</td>
+          <td>金气收敛衰、木气疏泄太过</td>
+          <td>肾、肺、肝</td>
+          <td>阳越、头晕、发热、足肿</td>
+        </tr>
+        <tr>
+          <td style="color:var(--earth)">土气运化不及</td>
+          <td>土气填实不能运化</td>
+          <td>脾、胃</td>
+          <td>腹满、停食、吐泻、四肢不举</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">相火燔灼不及</td>
+          <td>相火本气少</td>
+          <td>心包、三焦、命门</td>
+          <td>下寒、肾寒、二便不固</td>
+        </tr>
+        <tr>
+          <td style="color:var(--fire)">相火不降</td>
+          <td>相火燔灼于外</td>
+          <td>心包、三焦、肾</td>
+          <td>外热内寒、发烧热而内火少</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="marker">◆</div>
+    <p><strong>治疗本质：</strong>"中医的医理，只是运动轴的旋转，去运动轮的升降，与运动轮的升降，来运动轴的旋转而已。"——彭子益。不是对抗疾病，而是 <strong>恢复圆运动</strong>。轴不转则运轴，轮不运则转轮。此即中医治病的底层逻辑。</p>
+  </div>
+
+  <h3>五运六气致病的圆运动解释</h3>
+  <p>以2026丙午年为例（水运太过，少阴君火司天，阳明燥金在泉）：</p>
+  <blockquote>
+    <strong>水运太过 → 肾水封藏过度</strong>，水寒不温→肝木升发受抑（水寒木郁）→左升路线受阻→心火得不到肝气温煦→火气宣通不足。<br><br>
+    <strong>少阴君火司天 → 上半年火气偏盛</strong>，火克金→肺金收敛不及→右降路线减弱→相火不降郁于上→形成"上热中湿下寒"的圆运动分离。<br><br>
+    <strong>核心矛盾：</strong>水运太过（下寒）与司天君火（上热）之间的圆运动断裂，水火不交，中气受累。
+  </blockquote>
+</section>
+
+<!-- ============ SECTION 7: 推算工具 ============ -->
+<section id="calc">
+  <div class="section-title"><span class="num">柒</span>运气推算 · 圆运动视角</div>
+
+  <p>输入年份，查看当年五运六气对<strong>人体圆运动</strong>的影响评估：</p>
+
+  <div class="diagram-area">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:20px;">
+      <input type="number" id="calc-year" value="2026" style="
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 16px;
+        font-size: 1.1rem;
+        color: var(--text);
+        width: 120px;
+      ">
+      <button onclick="calcYear()" style="
+        background: var(--accent);
+        border: none;
+        border-radius: 6px;
+        padding: 10px 24px;
+        color: #fff;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background .15s;
+      " onmouseover="this.style.background='#a44a4a'" onmouseout="this.style.background='#8b3a3a'">推 算</button>
+    </div>
+
+    <div id="calc-result"><div style="color:var(--text2);font-size:0.85rem;">输入年份后点击推算</div></div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:32px;">
+    <h4>▎核心结论：圆运动即生命</h4>
+    <p>五运六气与人体内五行流动规律，在本质上回答的是同一个问题：<strong>生命如何在时间（五运六气的周期）和空间（脏腑经络的结构）中维持有序的圆运动？</strong></p>
+    <p>彭子益的《圆运动的古中医学》提供了一个优雅的框架 —— <span class="highlight">将《内经》五运六气从"天"拉回"人"身</span>，告诉我们：天道造化的圆运动，在人身上就是脾升胃降、肝升肺降、心火下煦、肾水温升。运化失圆则病，复圆则康。</p>
+    <p style="margin-top:10px;color:var(--gold);font-style:italic;">"天人的天字，乃整个造化的简称。人身个体，是宇宙圆运动的大气生的，为宇宙的遗传体。故曰，人身一小宇宙也。"</p>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<script>
+// ============================================================
+// 推算数据
+// ============================================================
+const TIAN_GAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const DI_ZHI = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const SHENG_XIAO = ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
+
+// 天干化五运
+const GAN_YUN = {
+  '甲':'土运太过（敦阜）','乙':'金运不及（从革）','丙':'水运太过（流衍）',
+  '丁':'木运不及（委和）','戊':'火运太过（赫曦）','己':'土运不及（卑监）',
+  '庚':'金运太过（坚成）','辛':'水运不及（涸流）','壬':'木运太过（发生）',
+  '癸':'火运不及（伏明）'
+};
+
+// 地支化六气：[司天, 在泉]
+const ZHI_QI = {
+  '子':['少阴君火(心)','阳明燥金(大肠)'],
+  '丑':['太阴湿土(脾)','太阳寒水(膀胱)'],
+  '寅':['少阳相火(三焦)','厥阴风木(肝)'],
+  '卯':['阳明燥金(大肠)','少阴君火(心)'],
+  '辰':['太阳寒水(膀胱)','太阴湿土(脾)'],
+  '巳':['厥阴风木(肝)','少阳相火(三焦)'],
+  '午':['少阴君火(心)','阳明燥金(大肠)'],
+  '未':['太阴湿土(脾)','太阳寒水(膀胱)'],
+  '申':['少阳相火(三焦)','厥阴风木(肝)'],
+  '酉':['阳明燥金(大肠)','少阴君火(心)'],
+  '戌':['太阳寒水(膀胱)','太阴湿土(脾)'],
+  '亥':['厥阴风木(肝)','少阳相火(三焦)']
+};
+
+const SHENG_KE = {
+  '木':'土', '火':'金', '土':'水', '金':'木', '水':'火'
+};
+
+const QI_WUXING = {
+  '少阴君火':'火', '少阳相火':'火', '阳明燥金':'金',
+  '太阳寒水':'水', '厥阴风木':'木', '太阴湿土':'土'
+};
+
+// 岁运对圆运动影响
+const YUN_ROUND_EFFECT = {
+  '土运太过（敦阜）':'土气填实 → 脾升胃降受阻 → 中轴运转滞涩 → 四维升降失司。易病腹满、四肢沉重。',
+  '金运不及（从革）':'金气收敛力弱 → 右降路线减弱 → 木气疏泄偏亢 → 圆运动左升过强右降不足。易病咳逆、自汗。',
+  '水运太过（流衍）':'肾水封藏过度 → 水寒不温 → 肝木升发受抑（水寒木郁）→ 左升路线受阻。易病寒湿、腰痛。',
+  '木运不及（委和）':'肝木升发无力 → 左升路线动力不足 → 心火得不到温煦 → 圆运动偏向右降。易病胁痛、月经不调。',
+  '火运太过（赫曦）':'心火宣通过度 → 火克金 → 肺金收敛受损 → 圆运动上浮不降。易病心烦、舌疮、失眠。',
+  '土运不及（卑监）':'中气薄弱 → 轴不运则轮不行 → 四维升降皆受影响 → 圆运动整体动能不足。易病倦怠、食少。',
+  '金运太过（坚成）':'金气收敛过度 → 右降太过 → 压制左升 → 木气不得伸发。易病胸闷、恶寒、便秘。',
+  '水运不及（涸流）':'肾水封藏力弱 → 相火不藏易浮越 → 上热下寒 → 圆运动上下分离。易病阳浮、耳鸣、足肿。',
+  '木运太过（发生）':'肝木疏泄过亢 → 木克土 → 中轴受制 → 脾升不及胃降紊乱。易病眩晕、头痛、腹痛。',
+  '火运不及（伏明）':'心火宣通不足 → 血寒神倦 → 火不生土 → 中气化源匮乏。易病心悸、畏寒、血痹。'
+};
+
+// 六气阶段对圆运动的阶段性影响
+const QI_ROUND_PHASE = [
+  { label:'初之气（大寒→惊蛰）', content:'厥阴风木主气。木气由水中升出，为全年圆运动的起点。此时宜养木气，助其疏泄升发。若外感风邪或木气自病，则圆运动起点卡滞，全年气机皆受影响。' },
+  { label:'二之气（春分→立夏）', content:'少阴君火主气。木气升极化为火，火浮于上。圆运动进入升浮阶段。此时宜养火气，宣通勿遏。若火气太过则克金，影响后续右降。' },
+  { label:'三之气（小满→小暑）', content:'少阳相火主气。相火由浮转降的关键节点。相火不降则燔灼于外，形成圆运动的"上热"故障；相火降入水中则中气生。此阶段决定全年圆运动能否顺利完成上下循环。' },
+  { label:'四之气（大暑→白露）', content:'太阴湿土主气。土运于中，为圆运动的中枢。湿土之气太过则中轴滞涩，四维失养。此阶段宜养土气，运化水湿。' },
+  { label:'五之气（秋分→立冬）', content:'阳明燥金主气。金气收敛，将上半年浮散的火阳降入土下。圆运动进入沉降阶段。金气收敛不及则阳气不得归根，太过则抑木。' },
+  { label:'终之气（小雪→小寒）', content:'太阳寒水主气。阳气尽藏于水中，为来年圆运动的根基。此时宜补水气，助封藏。封藏越固，来年木气升发越有根。' }
+];
+
+// ============================================================
+// 推算主体
+// ============================================================
+function calcYear() {
+  const input = document.getElementById('calc-year');
+  const year = parseInt(input.value);
+  const resultDiv = document.getElementById('calc-result');
+
+  if (!year || year < 1900 || year > 2100) {
+    resultDiv.innerHTML = '<div style="color:var(--accent);">请输入 1900-2100 之间的年份</div>';
+    return;
+  }
+
+  const offset = year - 4;
+  const ganIdx = offset % 10;
+  const zhiIdx = offset % 12;
+  const gan = TIAN_GAN[ganIdx];
+  const zhi = DI_ZHI[zhiIdx];
+  const shengXiao = SHENG_XIAO[zhiIdx];
+  const ganZhi = gan + zhi;
+
+  const yunText = GAN_YUN[gan] || '未知';
+  const qiArr = ZHI_QI[zhi] || ['未知','未知'];
+  const siTian = qiArr[0];
+  const zaiQuan = qiArr[1];
+
+  // 司天五行
+  const siTianParts = siTian.split('(')[0].trim();
+  const siTianWx = QI_WUXING[siTianParts] || '?';
+  const zaiQuanParts = zaiQuan.split('(')[0].trim();
+  const zaiQuanWx = QI_WUXING[zaiQuanParts] || '?';
+
+  // 岁运五行
+  const yunClean = yunText.replace(/（.*?）/g, '');
+  const yunWx = yunClean.startsWith('木') ? '木' : yunClean.startsWith('火') ? '火' : yunClean.startsWith('土') ? '土' : yunClean.startsWith('金') ? '金' : yunClean.startsWith('水') ? '水' : '?';
+
+  // 气运关系
+  let keStr = '';
+  if (yunWx !== '?' && siTianWx !== '?') {
+    if (yunWx === siTianWx) keStr = '岁运与司天同气 — 气运叠加，偏性极强，圆运动偏倚度最大';
+    else if (SHENG_KE[yunWx] === siTianWx) keStr = '岁运克司天 — 运盛气衰，圆运动受岁运主导方向偏转';
+    else if (SHENG_KE[siTianWx] === yunWx) keStr = '司天克岁运 — 气盛压运，天政布于上，圆运动受天气压抑';
+    else keStr = '气运相生 — 圆运动所受干扰较小，自然维持力强';
+  }
+
+  // 圆运动影响
+  const roundEffect = YUN_ROUND_EFFECT[yunText] || '暂无数据';
+
+  // 司天对圆运动的阶段性影响
+  const siTianEffect = {
+    '少阴君火':'上半年君火主令 → 火气宣通过盛 → 肺金收敛受压 → 右降路线阻力增大。心火浮于上，肾水沉于下，中气易虚。',
+    '少阳相火':'上半年相火主令 → 火气散漫不归 → 相火当降不降 → 燔灼于外 → 圆运动上热下寒。宜交通心肾。',
+    '阳明燥金':'上半年燥金主令 → 金气早敛 → 压制左升 → 木气不得舒展。圆运动偏于右降而左升不足。',
+    '太阳寒水':'上半年寒水主令 → 寒气外束 → 阳气内郁 → 木气升发被遏。圆运动整体偏沉不升。',
+    '厥阴风木':'上半年风木主令 → 疏泄太过 → 木克土 → 中轴动摇。圆运动升发过度而降收不足。',
+    '太阴湿土':'上半年湿土主令 → 土气填实 → 中轴运转滞涩 → 四维升降皆受影响。圆运动中枢失灵。'
+  }[siTianParts] || '';
+
+  // 在泉对圆运动的阶段影响（下半年）
+  const zaiQuanEffect = {
+    '少阴君火':'下半年君火在泉 → 火伏于下 → 肾水温升力强 → 但封藏受扰。圆运动根基有浮越之险。',
+    '少阳相火':'下半年相火在泉 → 相火归水中 → 肾水温，木气升发有根。圆运动根基扎实。',
+    '阳明燥金':'下半年燥金在泉 → 金水相生 → 收敛封藏力强 → 圆运动降沉收得好。根基最稳。',
+    '太阳寒水':'下半年寒水在泉 → 封藏过甚 → 水寒不温 → 来年木气升发根基被冻。',
+    '厥阴风木':'下半年风木在泉 → 木气疏泄于下 → 扰动封藏 → 圆运动根基不固。',
+    '太阴湿土':'下半年湿土在泉 → 土湿填于下 → 水气不化 → 肾封藏受阻。圆运动降沉受阻。'
+  }[zaiQuanParts] || '';
+
+  // 六气阶段推演
+  let phaseHtml = '';
+  QI_ROUND_PHASE.forEach((phase, i) => {
+    const isSpecial = (i === 2); // 相火阶段高亮
+    phaseHtml += `<div style="margin-bottom:10px;padding:10px 14px;background:${isSpecial ? 'rgba(139,58,58,0.08)' : 'var(--surface)'};border-radius:6px;border-left:3px solid ${isSpecial ? 'var(--accent)' : 'var(--border)'}">
+      <div style="font-size:0.82rem;color:var(--gold);margin-bottom:4px;">${phase.label}</div>
+      <div style="font-size:0.82rem;color:var(--text2);line-height:1.6;">${phase.content}</div>
+    </div>`;
+  });
+
+  const html = `
+    <div style="margin-bottom:16px;">
+      <strong style="font-size:1.2rem;color:var(--gold);letter-spacing:2px;">${year}年 · ${ganZhi}年（${shengXiao}年）</strong>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:0.75rem;color:var(--text2);margin-bottom:4px;">岁运</div>
+        <div style="color:${yunWx === '木' ? 'var(--wood)' : yunWx === '火' ? 'var(--fire)' : yunWx === '土' ? 'var(--earth)' : yunWx === '金' ? 'var(--metal)' : 'var(--water)'};font-weight:500;">${yunText}</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:0.75rem;color:var(--text2);margin-bottom:4px;">气运关系</div>
+        <div style="color:var(--text);font-size:0.85rem;">${keStr}</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:0.75rem;color:var(--text2);margin-bottom:4px;">司天（上半年）</div>
+        <div style="color:var(--accent-light);font-weight:500;">${siTian}</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <div style="font-size:0.75rem;color:var(--text2);margin-bottom:4px;">在泉（下半年）</div>
+        <div style="color:var(--blue);font-weight:500;">${zaiQuan}</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--accent);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:0.82rem;color:var(--gold);margin-bottom:8px;letter-spacing:1px;">▎岁运对人体圆运动的影响</div>
+      <div style="font-size:0.85rem;color:var(--text2);line-height:1.7;">${roundEffect}</div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:0.82rem;color:var(--gold);margin-bottom:8px;letter-spacing:1px;">▎司天对上半年圆运动的阶段性影响</div>
+      <div style="font-size:0.85rem;color:var(--text2);line-height:1.7;">${siTianEffect}</div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:0.82rem;color:var(--gold);margin-bottom:8px;letter-spacing:1px;">▎在泉对下半年圆运动的影响</div>
+      <div style="font-size:0.85rem;color:var(--text2);line-height:1.7;">${zaiQuanEffect}</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:16px;">
+      <div style="font-size:0.82rem;color:var(--gold);margin-bottom:10px;letter-spacing:1px;">▎六气阶段的圆运动推演</div>
+      ${phaseHtml}
+    </div>
+  `;
+
+  resultDiv.innerHTML = html;
+}
+
+// 默认推算
+calcYear();
+</script>
+
+</body>
+</html>
