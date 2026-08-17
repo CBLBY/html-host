@@ -80,6 +80,9 @@ h1 .v10{color:var(--blue)}
 
 /* chart */
 .chart{width:100%;height:260px;margin-top:2px}
+.rangebar{display:flex;gap:6px;margin:8px 0 4px;flex-wrap:wrap}
+.rangebar button{flex:1;min-width:52px;padding:4px 0;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#4b5563;font-size:11px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rangebar button.on{background:#8b3a3a;border-color:#8b3a3a;color:#fff;font-weight:600}
 
 /* ===== sections ===== */
 section{margin-top:22px}
@@ -276,6 +279,11 @@ function render(){
         '<div class="lrow">' + buyRow + '</div>' +
         '<div class="lrow">' + sellRow + '</div>' +
       '</div>' +
+      '<div class="rangebar" id="rb-' + d.code + '">' +
+        '<button data-r="30">近1月</button><button data-r="90">近3月</button>' +
+        '<button data-r="180">近6月</button><button data-r="365">近1年</button>' +
+        '<button data-r="0" class="on">全部</button>' +
+      '</div>' +
       '<div class="chart" id="chart-' + d.code + '"></div>' +
     '</div>';
   }).join('');
@@ -294,7 +302,13 @@ function render(){
     var c = echarts.init(document.getElementById('chart-' + d.code));
     c.setOption({
       animation: false,
-      grid: { left: 60, right: 16, top: 30, bottom: 28 },
+      grid: { left: 60, right: 16, top: 30, bottom: 36 },
+      dataZoom: [
+        { type: 'inside', start: 0, end: 100 },
+        { type: 'slider', height: 14, bottom: 4, start: 0, end: 100,
+          borderColor: '#d1d5db', fillerColor: 'rgba(139,58,58,.15)',
+          handleStyle: { color: '#8b3a3a' }, textStyle: { fontSize: 9, color: '#6b7280' } }
+      ],
       legend: { top: 4, right: 8, itemWidth: 14, itemHeight: 2,
         textStyle: { fontSize: 10, color: '#6b7280' }, data: ['价格', '中枢'] },
       tooltip: {
@@ -352,6 +366,30 @@ function render(){
       ]
     });
     charts.push(c);
+
+    /* 时间范围快捷按钮: data-r = 往前N天(0=全部) */
+    (function(chart, dts){
+      var rb = document.getElementById('rb-' + d.code);
+      if (!rb) return;
+      rb.querySelectorAll('button').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          rb.querySelectorAll('button').forEach(function(b){ b.classList.remove('on'); });
+          btn.classList.add('on');
+          var days = parseInt(btn.getAttribute('data-r'), 10), start = 0;
+          if (days > 0) {
+            var last = dts[dts.length - 1].split('-');
+            var cutoff = new Date(+last[0], +last[1] - 1, +last[2]);
+            cutoff.setDate(cutoff.getDate() - days);
+            var ct = cutoff.getTime();
+            for (var i = dts.length - 1; i >= 0; i--) {
+              var p = dts[i].split('-');
+              if (new Date(+p[0], +p[1] - 1, +p[2]).getTime() <= ct) { start = i; break; }
+            }
+          }
+          chart.setOption({ dataZoom: [{ start: (start / dts.length) * 100, end: 100 }] });
+        });
+      });
+    })(c, dates);
   });
 
   window.addEventListener('resize', function(){
